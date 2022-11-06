@@ -61,12 +61,12 @@ namespace Noughts_and_Crosses {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static byte[] Nought {
+        internal static System.Drawing.Bitmap Nought {
             get {
                 object obj = ResourceManager.GetObject("Nought", resourceCulture);
-                return ((byte[])(obj));
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }

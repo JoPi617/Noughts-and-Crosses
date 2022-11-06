@@ -12,6 +12,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Media;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.IO;
+using static Noughts_and_Crosses.Resources;
+using static System.Net.Mime.MediaTypeNames;
+
 
 namespace Noughts_and_Crosses
 {
@@ -27,7 +35,16 @@ namespace Noughts_and_Crosses
 
         private void btnTL_Click(object sender, RoutedEventArgs e)
         {
-          //  imgTurn.Source = Resources.
+            // MemoryStream ms = new MemoryStream(Nought);
+            //imgTurn.Source = System.Windows.Controls.Image.(ms);
+           // imgTurn.Source = ;
+           
+
+        }
+
+        private void btnBR_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
