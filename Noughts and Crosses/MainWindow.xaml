@@ -24,17 +24,14 @@
 
         <Button x:Name="btnTL" Grid.Row="1" Grid.Column="1" BorderBrush="Transparent" Foreground="Transparent" Background="Transparent" Click="btnTL_Click"/>
         <Button x:Name="btnTM" Grid.Row="1" Grid.Column="2" BorderBrush="Transparent" Foreground="Transparent" Background="Transparent"/>
-        <Button x:Name="btnTR" Grid.Row="1" Grid.Column="3" BorderBrush="Transparent" Foreground="Transparent" Background="#00000000"/>
-        <Button x:Name="btnML" Grid.Row="2" Grid.Column="1" BorderBrush="Transparent" Foreground="Transparent" Background="#00000000" />
-        <Button x:Name="btnMM" Grid.Row="2" Grid.Column="2" BorderBrush="Transparent" Foreground="Transparent" Background="#00000000"/>
-        <Button x:Name="btnMR" Grid.Row="2" Grid.Column="3" BorderBrush="Transparent" Foreground="Transparent" Background="#00000000"/>
-        <Button x:Name="btnBL" Grid.Row="3" Grid.Column="1" BorderBrush="Transparent" Foreground="Transparent" Background="#00000000"/>
-        <Button x:Name="btnBM" Grid.Row="3" Grid.Column="2" BorderBrush="Transparent" Foreground="Transparent" Background="#00000000"/>
-        <Button x:Name="btnBR" Grid.Row="3" Grid.Column="3" BorderBrush="Transparent" Foreground="Transparent" Click="btnBR_Click"/>
-           <!-- <Button.Background>
-                <ImageBrush ImageSource="Resources/Nought.png"/>
-            </Button.Background>
-        </Button> -->
+        <Button x:Name="btnTR" Grid.Row="1" Grid.Column="3" BorderBrush="Transparent" Foreground="Transparent" Background="Transparent"/>
+        <Button x:Name="btnML" Grid.Row="2" Grid.Column="1" BorderBrush="Transparent" Foreground="Transparent" Background="Transparent" />
+        <Button x:Name="btnMM" Grid.Row="2" Grid.Column="2" BorderBrush="Transparent" Foreground="Transparent" Background="Transparent"/>
+        <Button x:Name="btnMR" Grid.Row="2" Grid.Column="3" BorderBrush="Transparent" Foreground="Transparent" Background="Transparent"/>
+        <Button x:Name="btnBL" Grid.Row="3" Grid.Column="1" BorderBrush="Transparent" Foreground="Transparent" Background="Transparent"/>
+        <Button x:Name="btnBM" Grid.Row="3" Grid.Column="2" BorderBrush="Transparent" Foreground="Transparent" Background="Transparent"/>
+        <Button x:Name="btnBR" Grid.Row="3" Grid.Column="3" BorderBrush="Transparent" Foreground="Transparent" Background="Transparent" Click="btnBR_Click"/>
+
 
         <Image x:Name="imgTurn" Grid.Row="4" Grid.Column="4" Source= "Resources/Nought.png" Stretch="Fill" IsEnabled="False" />
 

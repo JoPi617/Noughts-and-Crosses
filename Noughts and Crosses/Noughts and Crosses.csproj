@@ -9,13 +9,21 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Nought.png" />
+    <None Remove="Resources\cross.png" />
+    <None Remove="Resources\Nought.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Nought.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
+    <EmbeddedResource Include="Resources\cross.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Nought.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>

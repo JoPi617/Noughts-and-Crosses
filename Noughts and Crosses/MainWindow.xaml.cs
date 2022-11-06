@@ -17,6 +17,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
+using System.Windows.Media.Animation;
 using static Noughts_and_Crosses.Resources;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -28,6 +29,14 @@ namespace Noughts_and_Crosses
     /// </summary>
     public partial class MainWindow : Window
     {
+        private bool isNought;
+        private int[,] board = new int[3, 3];
+
+        private void Turn(int collumn, int row)
+        {
+
+        }
+
         public MainWindow()
         {
             InitializeComponent();
@@ -35,16 +44,12 @@ namespace Noughts_and_Crosses
 
         private void btnTL_Click(object sender, RoutedEventArgs e)
         {
-            // MemoryStream ms = new MemoryStream(Nought);
-            //imgTurn.Source = System.Windows.Controls.Image.(ms);
-           // imgTurn.Source = ;
-           
-
+            Turn(0,0);
+            btnTL.IsEnabled = false;
         }
 
         private void btnBR_Click(object sender, RoutedEventArgs e)
         {
-
         }
     }
 }
