@@ -45,7 +45,18 @@ namespace Noughts_and_Crosses
         private void btnTL_Click(object sender, RoutedEventArgs e)
         {
             Turn(0,0);
-            btnTL.IsEnabled = false;
+
+            if (isNought)
+            {
+                btnTL.Background = new ImageBrush(new BitmapImage(new Uri("/Resources/Nought.png", UriKind.Relative)));
+            }
+            else
+            {
+                btnTL.Background = new ImageBrush(new BitmapImage(new Uri()));
+            }
+
+            //btnTL.IsEnabled = false;
+
         }
 
         private void btnBR_Click(object sender, RoutedEventArgs e)
