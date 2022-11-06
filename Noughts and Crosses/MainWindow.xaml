@@ -9,86 +9,19 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="3*" />
-            <ColumnDefinition Width="3*" />
-            <ColumnDefinition Width="3*" />
-            <ColumnDefinition Width="4*" />
+            <ColumnDefinition Width="5*" />
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height ="*"/>
-            <RowDefinition Height ="3*"/>
-            <RowDefinition Height ="3*"/>
-            <RowDefinition Height ="3*"/>
-            <RowDefinition Height ="4*"/>
+            <RowDefinition Height ="5*"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Button x:Name="btnTL" Grid.Row="1" Grid.Column="1" 
-                BorderBrush="Transparent" Foreground="Transparent"
-                Click="btnTL_Click">
-            <Button.Background>
-                <ImageBrush/>
-            </Button.Background>
-        </Button>
-        <Button x:Name="btnTM" Grid.Row="1" Grid.Column="2"
-                BorderBrush="Transparent" Foreground="Transparent"
-                Click="btnTM_Click">
-            <Button.Background>
-                <ImageBrush/>
-            </Button.Background>
-        </Button>
-        <Button x:Name="btnTR" Grid.Row="1" Grid.Column="3" 
-                BorderBrush="Transparent" Foreground="Transparent"
-                Click="btnTR_Click">
-            <Button.Background>
-                <ImageBrush/>
-            </Button.Background>
-        </Button>
-        <Button x:Name="btnML" Grid.Row="2" Grid.Column="1" 
-                BorderBrush="Transparent" Foreground="Transparent" 
-                Click="btnML_Click" >
-            <Button.Background>
-                <ImageBrush/>
-            </Button.Background>
-        </Button>
-        <Button x:Name="btnMM" Grid.Row="2" Grid.Column="2" 
-                BorderBrush="Transparent" Foreground="Transparent"
-                Click="btnMM_Click">
-            <Button.Background>
-                <ImageBrush/>
-            </Button.Background>
-        </Button>
-        <Button x:Name="btnMR" Grid.Row="2" Grid.Column="3"
-                BorderBrush="Transparent" Foreground="Transparent"
-                Click="btnMR_Click">
-            <Button.Background>
-                <ImageBrush/>
-            </Button.Background>
-        </Button>
-        <Button x:Name="btnBL" Grid.Row="3" Grid.Column="1"
-                BorderBrush="Transparent" Foreground="Transparent"
-                Click="btnBL_Click">
-            <Button.Background>
-                <ImageBrush/>
-            </Button.Background>
-        </Button>
-        <Button x:Name="btnBM" Grid.Row="3" Grid.Column="2" 
-                BorderBrush="Transparent" Foreground="Transparent"
-                Click="btnBM_Click">
-            <Button.Background>
-                <ImageBrush/>
-            </Button.Background>
-        </Button>
-        <Button x:Name="btnBR" Grid.Row="3" Grid.Column="3"
-                BorderBrush="Transparent" Foreground="Transparent"
-                Click="btnBR_Click">
-            <Button.Background>
-                <ImageBrush/>
-            </Button.Background>
-        </Button>
+        <local:UserControl1 x:Name="BrdMain" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2"/>
 
-        <Label x:Name ="lblWin" Grid.Row="1" Grid.Column="4"/>
-        <Image x:Name="imgTurn" Grid.Row="4" Grid.Column="4" Source= "Resources/Cross.png" Stretch="Fill" IsEnabled="False" />
-
+        
+        <Label x:Name ="lblWin" Grid.Row="1" Grid.Column="1"/>
+        <Image x:Name="imgTurn" Grid.Row="0" Grid.Column="1" Source= "Resources/Cross.png" Stretch="Fill" IsEnabled="False" />
+        
     </Grid>
 </Window>

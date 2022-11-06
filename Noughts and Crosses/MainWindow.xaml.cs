@@ -20,6 +20,8 @@ using System.IO;
 using System.Windows.Media.Animation;
 using static System.Net.Mime.MediaTypeNames;
 using Brush = System.Drawing.Brush;
+using static System.Convert;
+using Color = System.Drawing.Color;
 
 
 namespace Noughts_and_Crosses
@@ -30,7 +32,8 @@ namespace Noughts_and_Crosses
     public partial class MainWindow : Window
     {
         private bool isNought;
-        private int[,] board = new int[3, 3];
+        private int[,] board;
+        private int boardsize;
 
         private void Turn(int collumn, int row, object obj)
         {
@@ -124,55 +127,41 @@ namespace Noughts_and_Crosses
             return new BitmapImage(new Uri("pack://application:,,,/Resources/" + input + ".png"));
         }
 
-        public MainWindow()
+        public MainWindow(int size)
         {
             InitializeComponent();
+            boardsize = size;
+            for (int i = 0; i < size; i++)
+            {
+                BrdMain.BoardGrid.RowDefinitions.Add(new RowDefinition());
+                BrdMain.BoardGrid.ColumnDefinitions.Add(new ColumnDefinition());
+            }
+
+            for (int row = 0; row < size; row++)
+            {
+                for (int column = 0; column < size; column++)
+                {
+                    Button button = new Button();
+                    button.Name = "btn_" + row + "_" + column;
+                    button.Click += Btn_Click;
+                    button.Background = new SolidColorBrush(new System.Windows.Media.Color());
+                    button.BorderBrush = new SolidColorBrush(new System.Windows.Media.Color());
+
+                    Grid.SetRow(button, row);
+                    Grid.SetColumn(button, column);
+                    BrdMain.BoardGrid.Children.Add(button);
+                }
+            }
+
+            board = new int[size, size];
         }
 
 
-        private void btnTL_Click(object sender, RoutedEventArgs e)
+        private void Btn_Click(object sender, RoutedEventArgs e)
         {
-            Turn(0, 0, sender);
-        }
-
-        private void btnTM_Click(object sender, RoutedEventArgs e)
-        {
-            Turn(1, 0, sender);
-
-        }
-
-        private void btnTR_Click(object sender, RoutedEventArgs e)
-        {
-            Turn(2, 0, sender);
-        }
-
-        private void btnML_Click(object sender, RoutedEventArgs e)
-        {
-            Turn(0, 1, sender);
-        }
-
-        private void btnMM_Click(object sender, RoutedEventArgs e)
-        {
-            Turn(1, 1, sender);
-        }
-
-        private void btnMR_Click(object sender, RoutedEventArgs e)
-        {
-            Turn(2, 1, sender);
-        }
-
-        private void btnBL_Click(object sender, RoutedEventArgs e)
-        {
-            Turn(0, 2, sender);
-        }
-
-        private void btnBM_Click(object sender, RoutedEventArgs e)
-        {
-            Turn(1, 2, sender);
-        }
-        private void btnBR_Click(object sender, RoutedEventArgs e)
-        {
-            Turn(2, 2, sender);
+            Button button = sender as Button;
+            var array = button!.Name.Split('_');
+            Turn(ToInt32(array[2]), ToInt32(array[1]), sender);
         }
     }
 }
