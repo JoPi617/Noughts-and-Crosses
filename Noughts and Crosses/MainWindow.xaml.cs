@@ -48,11 +48,11 @@ namespace Noughts_and_Crosses
 
             if (isNought)
             {
-                btnTL.Background = new ImageBrush(new BitmapImage(new Uri("/Resources/Nought.png", UriKind.Relative)));
+                btnTL.Background = new ImageBrush(Nought);
             }
             else
             {
-                btnTL.Background = new ImageBrush(new BitmapImage(new Uri()));
+                btnTL.Background = new ImageBrush(ToSource(Cross));
             }
 
             //btnTL.IsEnabled = false;
