@@ -6,6 +6,5 @@
              xmlns:local="clr-namespace:Noughts_and_Crosses"
              mc:Ignorable="d" 
              d:DesignHeight="840" d:DesignWidth="840">
-    <Grid x:Name="BoardGrid">
-    </Grid>
+    <Grid x:Name="BoardGrid" ShowGridLines="True"/>
 </UserControl>

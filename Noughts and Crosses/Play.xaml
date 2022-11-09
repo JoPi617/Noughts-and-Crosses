@@ -6,7 +6,12 @@
         xmlns:local="clr-namespace:Noughts_and_Crosses"
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="600">
-
+    <Window.Resources>
+        <local:Data x:Key="Data"/>
+    </Window.Resources>
+    <Window.DataContext>
+        <Binding Source="{StaticResource Data}"/>
+    </Window.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5*" />
@@ -17,11 +22,11 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <local:UserControl1 x:Name="BrdMain" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2"/>
+        <local:UserControl1 x:Name="brdMain" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2"/>
 
-        
-        <Label x:Name ="lblWin" Grid.Row="1" Grid.Column="1"/>
-        <Image x:Name="imgTurn" Grid.Row="0" Grid.Column="1" Source= "Resources/Cross.png" Stretch="Fill" IsEnabled="False" />
-        
+        <TextBlock x:Name ="txtWin" Grid.Row="0" Grid.Column="1"/>
+        <Viewbox Grid.Row="1" Grid.Column="1">
+            <TextBlock x:Name="txtTurn"/>
+        </Viewbox>
     </Grid>
 </Window>

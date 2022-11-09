@@ -12,16 +12,15 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using static System.Convert;
 
 namespace Noughts_and_Crosses
 {
     /// <summary>
-    /// Interaction logic for UserControl1.xaml
+    /// Interaction logic for Symbols.xaml
     /// </summary>
-    public partial class UserControl1 : UserControl
+    public partial class Symbols : UserControl
     {
-        public UserControl1()
+        public Symbols()
         {
             InitializeComponent();
         }
