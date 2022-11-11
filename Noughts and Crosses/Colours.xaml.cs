@@ -2,7 +2,8 @@
 using System.Windows;
 using System.Windows.Controls;
 
-using System.Drawing;
+using System.Windows.Media;
+using Color = System.Windows.Media.Color;
 
 namespace Noughts_and_Crosses
 {
@@ -11,15 +12,16 @@ namespace Noughts_and_Crosses
     /// </summary>
     public partial class Colours : UserControl
     {
-        private Color colour { get; set; }
+        public System.Windows.Media.Brush Colour { get; set; }
         public Colours()
         {
             InitializeComponent();
+            Colour = new SolidColorBrush(Colors.Red);
         }
 
         private void Value_Changed(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            colour = Color.FromArgb(ToInt32(sldR.Value), ToInt32(sldG.Value), ToInt32(sldB.Value));
+            Colour = new SolidColorBrush(Color.FromRgb(ToByte(sldR.Value), ToByte(sldG.Value), ToByte(sldB.Value)));
         }
     }
 }

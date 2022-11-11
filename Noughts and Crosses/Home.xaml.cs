@@ -27,46 +27,42 @@ namespace Noughts_and_Crosses
             InitializeComponent();
             clrP1.sldB.Value = 255;
             clrP2.sldR.Value = 255;
+            symbP1.btn1.Foreground = clrP1.Colour;
+            txtP1Score.Foreground = clrP1.Colour;
+            symbP2.btn1.Foreground = clrP2.Colour;
+            txtP2Score.Foreground = clrP2.Colour;
+            symbP1.btn1.GroupName = "p1";
+            symbP1.btn1.GroupName = "p2";
         }
 
         private void clrP1_MouseMove(object sender, MouseEventArgs e)
         {
-            txtP1Display.Foreground = new SolidColorBrush(Color.FromRgb(ToByte(clrP1.sldR.Value),
-                ToByte(clrP1.sldG.Value), ToByte(clrP1.sldB.Value)));
+            txtP1Score.Foreground = txtP1Display.Foreground = symbP1.btn1.Foreground = txtP1Name.Foreground = 
+                    clrP1.Colour;
         }
 
         private void clrP2_MouseMove(object sender, MouseEventArgs e)
         {
-            txtP2Display.Foreground = new SolidColorBrush(Color.FromRgb(ToByte(clrP2.sldR.Value),
-                ToByte(clrP2.sldG.Value), ToByte(clrP2.sldB.Value)));
+            txtP2Score.Foreground = txtP2Display.Foreground = symbP2.btn1.Foreground = txtP2Name.Foreground =
+                clrP2.Colour;
         }
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
             Visibility = Visibility.Collapsed;
-            var frm1 = new MainWindow(3,3, "╳", "◯");
+            var frm1 = new MainWindow(ToInt32(txtHeight.Text),ToInt32(txtWidth.Text), ToInt32(txtWin.Text),txtP1Display.Text, txtP2Display.Text, 
+                txtP1Display.Foreground, txtP2Display.Foreground, txtP1Name.Text, txtP2Name.Text);
             frm1.Show();
         }
 
-    }
-
-
-    /*
-    public class SizeToFontConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        private void symbP1_MouseMove(object sender, MouseEventArgs e)
         {
-            if (value is double)
-            {
-                return value / 1.0;
-            }
+            txtP1Display.Text = symbP1.Symbol;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        private void symbP2_MouseMove(object sender, MouseEventArgs e)
         {
-            var dbl = value as double?;
-            return dbl * 2;
+            txtP2Display.Text = symbP2.Symbol;
         }
     }
-    */
 }

@@ -37,31 +37,32 @@
         <Button x:Name="btnStart" Click="btnStart_Click" Grid.Row="0" Grid.Column="0"/>
 
 
+        <Viewbox Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Foreground="BurlyWood" Text="Welcome to Joe Piper's" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock Grid.Row="1" Foreground="BurlyWood" Text="Noughts and Crosses" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Grid>
+        </Viewbox>
+
         <Viewbox Grid.Row="4" Grid.Column="1">
             <TextBlock x:Name="txtP1Display" 
                    Text="╳" Foreground="Blue" Background="Transparent"/>
         </Viewbox>
         <local:Colours x:Name="clrP1"  Grid.Row="4" Grid.Column="2" MouseMove="clrP1_MouseMove" />
-        <TextBox x:Name="txtP1Name" Text="Player 1" Grid.Row="3" Grid.Column="1"
-                 Background="Transparent" Foreground="Blue" BorderBrush="Transparent" 
-                 HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
-        <Viewbox Grid.Row="4" Grid.Column="0" Grid.RowSpan="2">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <RadioButton Grid.Row="0" x:Name="btn1" Content="╳" GroupName="symbol"/>
-                <RadioButton x:Name="btn2" Content="◯" GroupName="symbol"/>
-                <RadioButton x:Name="btn3" Content="♤" GroupName="symbol"/>
-                <RadioButton x:Name="btn4" Content="♡" GroupName="symbol"/>
-                <RadioButton x:Name="btn5" Content="♢" GroupName="symbol"/>
-                <RadioButton x:Name="btn6" Content="♧" GroupName="symbol"/>
-            </Grid>
+        <Viewbox Grid.Row="3" Grid.Column="1" Margin="15,25,15,0">
+            <TextBox x:Name="txtP1Name" Text="Player 1" 
+                     Background="Transparent" Foreground="Blue" BorderBrush="Transparent" 
+                     HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+        </Viewbox>
+        <local:Symbols x:Name="symbP1" Grid.Row="4" Grid.Column="0" Grid.RowSpan="2" Margin="0,0,0,20" 
+                       MouseMove="symbP1_MouseMove" Symbol="╳"/>
+        <Viewbox Grid.Row="5" Grid.Column="1">
+            <TextBlock x:Name="txtP1Score" Text="Score: 0" Margin="15,0,15,0"/>
+
         </Viewbox>
 
 
@@ -77,11 +78,51 @@
                 </TransformGroup>
             </local:Colours.RenderTransform>
         </local:Colours>
-        <TextBox x:Name="txtP2Name" Text="Player 2" Grid.Row="3" Grid.Column="3"
-                 Background="Transparent" Foreground="Red" BorderBrush="Transparent" 
-                 HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+        <Viewbox Grid.Row="3" Grid.Column="4" Margin="15,25,15,0">
+            <TextBox x:Name="txtP2Name" Text="Player 2" 
+                     Background="Transparent" Foreground="Red" BorderBrush="Transparent" 
+                     HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+        </Viewbox>
+        <local:Symbols x:Name="symbP2" Grid.Row="4" Grid.Column="5" Grid.RowSpan="2" RenderTransformOrigin="0.5,0.5" Margin="0,0,0,20"
+                       MouseMove="symbP2_MouseMove" Symbol="◯">
+            <local:Symbols.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleX="-1"/>
+                </TransformGroup>
+            </local:Symbols.RenderTransform>
+        </local:Symbols>
+        <Viewbox Grid.Row="5" Grid.Column="4" >
+            <TextBlock x:Name="txtP2Score" Text="Score: 0" Margin="15,0,15,0"/>
+        </Viewbox>
 
+        <Viewbox Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right">
+            <TextBlock x:Name="txtHeightLbl"  Text="Height" Margin="0,15,0,15" 
+                       Background="Transparent" Foreground="DeepSkyBlue" HorizontalAlignment="Right" />
+        </Viewbox>
 
+        <Viewbox Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left">
+            <TextBox x:Name="txtHeight"  Text="3" Margin="10,15,0,15"
+                     Background="Transparent" Foreground="DeepSkyBlue" BorderBrush="Transparent"/>
+        </Viewbox>
 
+        <Viewbox Grid.Row="2" Grid.Column="2" HorizontalAlignment="Right">
+            <TextBlock x:Name="txtWidthLbl"  Text="Width" Margin="0,15,0,15" 
+                       Background="Transparent" Foreground="DeepSkyBlue" HorizontalAlignment="Right" />
+        </Viewbox>
+
+        <Viewbox Grid.Row="2" Grid.Column="3" HorizontalAlignment="Left">
+            <TextBox x:Name="txtWidth"  Text="3" Margin="10,15,0,15"
+                     Background="Transparent" Foreground="DeepSkyBlue" BorderBrush="Transparent"/>
+        </Viewbox>
+
+        <Viewbox Grid.Row="2" Grid.Column="4" HorizontalAlignment="Right">
+            <TextBlock x:Name="txtWinLbl"  Text="Win" Margin="0,15,0,15" 
+                       Background="Transparent" Foreground="DeepSkyBlue" HorizontalAlignment="Right" />
+        </Viewbox>
+
+        <Viewbox Grid.Row="2" Grid.Column="5" HorizontalAlignment="Left">
+            <TextBox x:Name="txtWin"  Text="3" Margin="10,15,0,15"
+                     Background="Transparent" Foreground="DeepSkyBlue" BorderBrush="Transparent"/>
+        </Viewbox>
     </Grid>
 </Window>

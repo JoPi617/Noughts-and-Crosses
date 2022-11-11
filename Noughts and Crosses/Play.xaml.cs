@@ -20,25 +20,33 @@ namespace Noughts_and_Crosses
     /// </summary>
     public partial class MainWindow : Window
     {
-        public Data data = new();
-        public int height { get; set; }
-        public int width { get; set; }
-        public int win { get; set; }
-        public int[,] board { get; set; }
-        public string winner { get; set; } = "sd";
-        public string p1 { get; set; }
-        public string p2 { get; set; }
-        public bool turn { get; set; }
-        public MainWindow(int height, int width, string newP1, string newP2)
+        public int height;
+        public int width;
+        public int win;
+        public int[,] board;
+        public string winner;
+        public string p1Sym;
+        public string p2Sym;
+        public Brush p1Color;
+        public Brush p2Color;
+        public string p1Name;
+        public string p2Name;
+        public bool turn;
+
+        public MainWindow(int height, int width, int win, string newP1, string newP2, Brush p1Color, Brush p2Color, string p1Name, string p2Name)
         {
             InitializeComponent();
 
             BoardSet(height,width);
             turn = true;
             board = new int[height, width];
-            p1 = newP1;
-            p2 = newP2;
-            data.Winner = "asdas";
+            p1Sym = newP1;
+            p2Sym = newP2;
+            this.p1Color = p1Color;
+            this.p2Color = p2Color;
+            this.p1Name = p1Name;
+            this.p2Name = p2Name;
+            this.win = win;
         }
 
         private void BoardSet(int _height, int _width)
@@ -66,12 +74,6 @@ namespace Noughts_and_Crosses
                     Grid.SetRow(button, row);
                     Grid.SetColumn(button, column);
                     brdMain.BoardGrid.Children.Add(button);
-
-                    var bnd = new Binding("winner")
-                    {
-                        Source = data,
-                        Mode = BindingMode.TwoWay
-                    };
                 }
             }
         }
@@ -85,26 +87,24 @@ namespace Noughts_and_Crosses
                 if (turn)
                 {
                     board[row, column] = 10;
-                    txtTurn.Text = p2;
-                    btn.Content = p1;
+                    txtTurn.Text = p2Sym;
+                    txtTurn.Foreground = p2Color;
+                    btn.Content = p1Sym;
+                    btn.Foreground = p1Color;
                 }
                 else
                 {
                     board[row, column] = 1;
-                    txtTurn.Text = p1;
-                    btn.Content = p2;
+                    txtTurn.Text = p1Sym;
+                    txtTurn.Foreground = p1Color;
+                    btn.Content = p2Sym;
+                    btn.Foreground = p2Color;
                 }
 
-                data.Winner = ScoreCheck();
-                UpdateWinner();
+                winner = ScoreCheck();
+                txtWin.Text = winner;
                 turn= !turn;
             }
-        }
-
-        private void UpdateWinner()
-        {
-            txtTurn.GetBindingExpression(Data.WinnerProperty).UpdateSource();
-            txtTurn.GetBindingExpression(Data.WinnerProperty).UpdateTarget();
         }
 
         private string ScoreCheck()
@@ -205,8 +205,7 @@ namespace Noughts_and_Crosses
         private void Btn_Click(object sender, RoutedEventArgs e)
         {
             Turn(sender);
-            data.Winner = "df";
-            UpdateWinner();
+            winner = "asd";
         }
     }
 }
