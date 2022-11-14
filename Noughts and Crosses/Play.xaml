@@ -12,7 +12,7 @@
     <Window.DataContext>
         <Binding Source="{StaticResource Data}"/>
     </Window.DataContext>
-    <Grid>
+    <Grid x:Name="Grid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5*" />
             <ColumnDefinition Width="*"/>
@@ -21,6 +21,8 @@
             <RowDefinition Height ="5*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="2" Background="DarkSlateGray"/>
 
         <local:UserControl1 x:Name="brdMain" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2"/>
 

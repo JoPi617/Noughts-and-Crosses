@@ -50,8 +50,9 @@ namespace Noughts_and_Crosses
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
             Visibility = Visibility.Collapsed;
-            var frm1 = new MainWindow(ToInt32(txtHeight.Text),ToInt32(txtWidth.Text), ToInt32(txtWin.Text),txtP1Display.Text, txtP2Display.Text, 
-                txtP1Display.Foreground, txtP2Display.Foreground, txtP1Name.Text, txtP2Name.Text);
+            var frm1 = new MainWindow(ToInt32(txtHeight.Text),ToInt32(txtWidth.Text), ToInt32(txtWin.Text),
+                txtP1Display.Text, txtP2Display.Text, txtP1Display.Foreground, txtP2Display.Foreground,
+                txtP1Name.Text, txtP2Name.Text);
             frm1.Show();
         }
 

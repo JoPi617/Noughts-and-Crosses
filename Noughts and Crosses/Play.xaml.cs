@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -11,7 +12,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Media.Media3D;
+using System.Windows.Shapes;
 
 namespace Noughts_and_Crosses
 {
@@ -40,6 +41,8 @@ namespace Noughts_and_Crosses
             BoardSet(height,width);
             turn = true;
             board = new int[height, width];
+            this.height = height;
+            this.width = width;
             p1Sym = newP1;
             p2Sym = newP2;
             this.p1Color = p1Color;
@@ -47,6 +50,7 @@ namespace Noughts_and_Crosses
             this.p1Name = p1Name;
             this.p2Name = p2Name;
             this.win = win;
+            winner = "";
         }
 
         private void BoardSet(int _height, int _width)
@@ -101,28 +105,55 @@ namespace Noughts_and_Crosses
                     btn.Foreground = p2Color;
                 }
 
-                winner = ScoreCheck();
-                txtWin.Text = winner;
+                var temp = ScoreCheck();
+                if (temp[0] != 0)
+                {
+                    Draw(temp);
+                    winner = temp[0].ToString();
+                    txtWin.Text = winner;
+                }
+
                 turn= !turn;
             }
         }
 
-        private string ScoreCheck()
+        private void Draw(int[] input)
+        {
+            var color = input[0] == 1 ? p1Color : p2Color;
+            var boardWidth = brdMain.ActualWidth /  Convert.ToDouble(brdMain.BoardGrid.ColumnDefinitions.Count);
+            var boardHeight = brdMain.ActualHeight / Convert.ToDouble(brdMain.BoardGrid.RowDefinitions.Count);
+
+            var startX = (input[1]+0.5) * boardWidth;
+            var startY = (input[2]+0.5) * boardHeight;
+            var endX = (input[3] + 0.5) * boardWidth;
+            var endY = (input[4] + 0.5) * boardHeight;
+
+            var line = new Line();
+            line.Stroke = color;
+            line.X1 = startX;
+            line.X2 = endX;
+            line.Y1 = startY;
+            line.Y2 = endY;
+            line.StrokeThickness = 20;
+            Grid.Children.Add(line);
+        }
+
+        private int[] ScoreCheck()
         {
             for (int _height = 0; _height < height-win+1; _height++)
             {
                 for (int _width = 0; _width < width - win+1; _width++)
                 {
-                    string result = SubCheck(_height, _width, win);
-                    if (result != "")
+                    int[] result = SubCheck(_height, _width, win);
+                    if (result[0] != 0)
                     {
                         return result;
                     }
                 }
             }
-            return "";
+            return new[] {0};
         }
-        private string SubCheck(int x, int y, int size)
+        private int[] SubCheck(int x, int y, int size)
         {
             int sum = 0;
             for (int row = 0; row < size; row++) // check rows
@@ -132,14 +163,14 @@ namespace Noughts_and_Crosses
                     sum += board[x+row, y+column];
                 }
 
-                if (sum == 3)
+                if (sum == size)
                 {
-                    return "nought";
+                    return new []{2, x+row,y, x+row + size-1, y};
                
                 }
-                if (sum==30)
+                if (sum==10*size)
                 {
-                    return "cross";
+                    return new[] { 1, x+row, y, x + row + size - 1, y};
                 }
                 sum = 0;
             }
@@ -152,15 +183,14 @@ namespace Noughts_and_Crosses
                     sum += board[x+row, y+column];
                 }
 
-                if (sum == 3)
+                if (sum == size)
                 {
-                    return "nought";
-                    
+                    return new[] { 2, x, y+column, x, y + column + size-1 };
+
                 }
-                if (sum == 30)
+                if (sum == 10*size)
                 {
-                    return "cross";
-                    
+                    return new[] { 1, x, y + column, x, y + column + size-1 };
                 }
                 sum = 0;
             }
@@ -171,14 +201,14 @@ namespace Noughts_and_Crosses
                 sum+= board[x+i, y+i];
             }
 
-            if (sum == 3)
+            if (sum == size)
             {
-                return "nought";
+                return new[] { 2, x, y, (x + size-1), (y + size-1) };
             }
 
-            if (sum == 30)
+            if (sum == 10*size)
             {
-                return "cross";
+                return new[] { 1, x, y, (x + size-1), (y + size-1) };
             }
 
             sum = 0;
@@ -189,7 +219,7 @@ namespace Noughts_and_Crosses
                rev--;
             }
 
-            return "";
+            return new []{0};
         }
 
         public ImageBrush ToBrush(string input)
@@ -205,7 +235,6 @@ namespace Noughts_and_Crosses
         private void Btn_Click(object sender, RoutedEventArgs e)
         {
             Turn(sender);
-            winner = "asd";
         }
     }
 }
