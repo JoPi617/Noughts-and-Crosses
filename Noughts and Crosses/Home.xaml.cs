@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -22,6 +23,29 @@ namespace Noughts_and_Crosses
     /// </summary>
     public partial class Page1 : Window
     {
+        private int p1Score;
+
+        public int P1Score
+        {
+            get => p1Score;
+            set
+            {
+                txtP1Score.Text = $"Score: {value}";
+                p1Score = value;
+            }
+        }
+
+        private int p2Score;
+        public int P2Score
+        {
+            get => p2Score;
+            set
+            {
+                txtP2Score.Text = $"Score: {value}";
+                p2Score = value;
+            }
+        }
+
         public Page1()
         {
             InitializeComponent();
@@ -53,6 +77,7 @@ namespace Noughts_and_Crosses
             var frm1 = new MainWindow(ToInt32(txtHeight.Text),ToInt32(txtWidth.Text), ToInt32(txtWin.Text),
                 txtP1Display.Text, txtP2Display.Text, txtP1Display.Foreground, txtP2Display.Foreground,
                 txtP1Name.Text, txtP2Name.Text);
+            frm1.Home = this;
             frm1.Show();
         }
 

@@ -4,6 +4,7 @@ using System.Data.Common;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,18 +22,20 @@ namespace Noughts_and_Crosses
     /// </summary>
     public partial class MainWindow : Window
     {
-        public int height;
-        public int width;
-        public int win;
-        public int[,] board;
-        public string winner;
-        public string p1Sym;
-        public string p2Sym;
-        public Brush p1Color;
-        public Brush p2Color;
-        public string p1Name;
-        public string p2Name;
-        public bool turn;
+        private int height;
+        private int width;
+        private int win;
+        private int[,] board;
+        private string winner;
+        private string p1Sym;
+        private string p2Sym;
+        private Brush p1Color;
+        private Brush p2Color;
+        private string p1Name;
+        private string p2Name;
+        private bool turn;
+
+        public Page1 Home;
 
         public MainWindow(int height, int width, int win, string newP1, string newP2, Brush p1Color, Brush p2Color, string p1Name, string p2Name)
         {
@@ -51,6 +54,8 @@ namespace Noughts_and_Crosses
             this.p2Name = p2Name;
             this.win = win;
             winner = "";
+            txtTurn.Text = p1Sym;
+            txtTurn.Foreground = p1Color;
         }
 
         private void BoardSet(int _height, int _width)
@@ -72,8 +77,9 @@ namespace Noughts_and_Crosses
                     Button button = new Button();
                     button.Name = "btn_" + row + "_" + column;
                     button.Click += Btn_Click;
-                    button.Background = new SolidColorBrush(new Color());
-                    button.BorderBrush = new SolidColorBrush(new Color());
+                    button.Background = new SolidColorBrush(Colors.Transparent);
+                    button.BorderBrush = new SolidColorBrush(Colors.Transparent);
+                    
 
                     Grid.SetRow(button, row);
                     Grid.SetColumn(button, column);
@@ -81,9 +87,9 @@ namespace Noughts_and_Crosses
                 }
             }
         }
-        private void Turn(object obj)
+        private void Turn(object sender)
         {
-            Button btn = (obj as Button)!;
+            Button btn = (sender as Button)!;
             var row = Grid.GetRow(btn);
             var column = Grid.GetColumn(btn);
             if (board[row, column] == 0)
@@ -105,19 +111,60 @@ namespace Noughts_and_Crosses
                     btn.Foreground = p2Color;
                 }
 
-                var temp = ScoreCheck();
-                if (temp[0] != 0)
+                var result = ScoreCheck();
+                if (result[0] != 0)
                 {
-                    Draw(temp);
-                    winner = temp[0].ToString();
-                    txtWin.Text = winner;
+                    Win(result);
+                }
+                else if (fillCheck())
+                {
+                    Draw();
                 }
 
                 turn= !turn;
             }
         }
 
-        private void Draw(int[] input)
+        private bool fillCheck()
+        {
+            var full = true;
+            for (int i = 0; i < width; i++)
+            {
+                for (int j = 0; j < height; j++)
+                {
+                    if (board[j, i] == 0) full = false;
+                }
+            }
+            return full;
+        }
+
+        private void Draw()
+        {
+            MessageBox.Show("It's a draw!", "Draw!", MessageBoxButton.OK);
+            Hide();
+            Home.Visibility = Visibility.Visible;
+        }
+        private void Win(int[] result)
+        {
+            Line(result);
+            winner = result[0].ToString();
+
+            if (winner == "1")
+            {
+                MessageBox.Show($"{p1Name} is the winner!", "Winner!", MessageBoxButton.OK);
+                Home.P1Score++;
+            }
+            else
+            {
+                MessageBox.Show($"{p2Name} is the winner!", "Winner!", MessageBoxButton.OK);
+                Home.P2Score++;
+            }
+            Hide();
+            
+            Home.Visibility = Visibility.Visible;
+        }
+
+        private void Line(int[] input)
         {
             var color = input[0] == 1 ? p1Color : p2Color;
             var boardWidth = brdMain.ActualWidth /  Convert.ToDouble(brdMain.BoardGrid.ColumnDefinitions.Count);
@@ -134,7 +181,7 @@ namespace Noughts_and_Crosses
             line.X2 = endX;
             line.Y1 = startY;
             line.Y2 = endY;
-            line.StrokeThickness = 20;
+            line.StrokeThickness = 10;
             Grid.Children.Add(line);
         }
 
@@ -165,12 +212,12 @@ namespace Noughts_and_Crosses
 
                 if (sum == size)
                 {
-                    return new []{2, x+row,y, x+row + size-1, y};
+                    return new []{2, x,y + row, x + size-1, y + row };
                
                 }
                 if (sum==10*size)
                 {
-                    return new[] { 1, x+row, y, x + row + size - 1, y};
+                    return new[] { 1, x, y + row, x + size - 1, y + row };
                 }
                 sum = 0;
             }
@@ -185,12 +232,12 @@ namespace Noughts_and_Crosses
 
                 if (sum == size)
                 {
-                    return new[] { 2, x, y+column, x, y + column + size-1 };
+                    return new[] { 2, x + column, y, x + column, y + size-1 };
 
                 }
                 if (sum == 10*size)
                 {
-                    return new[] { 1, x, y + column, x, y + column + size-1 };
+                    return new[] { 1, x + column, y, x + column, y+ size-1 };
                 }
                 sum = 0;
             }
@@ -235,6 +282,26 @@ namespace Noughts_and_Crosses
         private void Btn_Click(object sender, RoutedEventArgs e)
         {
             Turn(sender);
+        }
+
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            foreach (var child in brdMain.BoardGrid.Children)
+            {
+                var btn = child as Button;
+                try
+                {
+                    if (btn.ActualHeight > btn.ActualWidth)
+                    {
+                        btn.FontSize = btn.ActualWidth * 0.7;
+                    }
+                    else
+                    {
+                        btn.FontSize = btn.ActualHeight *0.7;
+                    }
+                }
+                catch{}
+            }
         }
     }
 }

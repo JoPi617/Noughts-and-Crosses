@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Noughts_and_Crosses"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="600">
+        Title="MainWindow" Height="600" Width="600" SizeChanged="Window_SizeChanged">
     <Window.Resources>
         <local:Data x:Key="Data"/>
     </Window.Resources>
@@ -24,9 +24,13 @@
 
         <Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="2" Background="DarkSlateGray"/>
 
-        <local:UserControl1 x:Name="brdMain" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2"/>
+        <local:UserControl1 x:Name="brdMain" Grid.Row="0" Grid.Column="0"/>
 
-        <TextBlock x:Name ="txtWin" Grid.Row="0" Grid.Column="1"/>
+        <Viewbox Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Margin="0,20,0,20">
+            <TextBlock  Text="Next turn:" Foreground="BurlyWood"/>
+
+        </Viewbox>
+
         <Viewbox Grid.Row="1" Grid.Column="1">
             <TextBlock x:Name="txtTurn"/>
         </Viewbox>
