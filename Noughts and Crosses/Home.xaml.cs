@@ -90,5 +90,15 @@ namespace Noughts_and_Crosses
         {
             txtP2Display.Text = symbP2.Symbol;
         }
+
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            try
+            {
+                btnStart.FontSize = Window.ActualWidth * 0.05;
+
+            }
+            catch{}
+        }
     }
 }

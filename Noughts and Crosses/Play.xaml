@@ -6,12 +6,6 @@
         xmlns:local="clr-namespace:Noughts_and_Crosses"
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="600" SizeChanged="Window_SizeChanged">
-    <Window.Resources>
-        <local:Data x:Key="Data"/>
-    </Window.Resources>
-    <Window.DataContext>
-        <Binding Source="{StaticResource Data}"/>
-    </Window.DataContext>
     <Grid x:Name="Grid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5*" />
@@ -28,7 +22,6 @@
 
         <Viewbox Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Margin="0,20,0,20">
             <TextBlock  Text="Next turn:" Foreground="BurlyWood"/>
-
         </Viewbox>
 
         <Viewbox Grid.Row="1" Grid.Column="1">

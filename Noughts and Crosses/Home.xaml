@@ -6,7 +6,8 @@
       xmlns:local="clr-namespace:Noughts_and_Crosses"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="Page1">
+      Title="Page1" SizeChanged="Window_SizeChanged"
+      x:Name="Window">
     <Window.Resources>
         <!--local:SizeToFontConverter x:Key="SizeToFont" /-->
     </Window.Resources>
@@ -34,7 +35,9 @@
                 Grid.Column="0" Grid.ColumnSpan="6"
                 Background="DarkSlateGray"/>
 
-        <Button x:Name="btnStart" Click="btnStart_Click" Grid.Row="0" Grid.Column="0"/>
+        <Button x:Name="btnStart" Click="btnStart_Click" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2"
+                Background="Transparent" Foreground="DarkOrange" BorderBrush="Transparent" Content="Play!"/> 
+        
 
 
         <Viewbox Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2">

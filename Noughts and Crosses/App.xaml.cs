@@ -9,7 +9,16 @@ namespace Noughts_and_Crosses
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
-    public partial class App : Application
+    public partial class App : Application 
     {
     }
 }
+
+/* To do:
+        Fix line draw
+        AI
+        Timer
+        Modes
+        Music
+        Backgrounds
+ */
