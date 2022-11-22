@@ -51,26 +51,26 @@ public partial class MainWindow : Window
         txtTurn.Foreground = p1Color;
     }
 
-    private void BoardSet(int _height, int _width)
+    private void BoardSet(int height, int _width)
     {
-        for (var i = 0; i < _height; i++) brdMain.BoardGrid.RowDefinitions.Add(new RowDefinition());
+        for (var i = 0; i < height; i++) brdMain.BoardGrid.RowDefinitions.Add(new RowDefinition());
 
         for (var i = 0; i < _width; i++) brdMain.BoardGrid.ColumnDefinitions.Add(new ColumnDefinition());
 
-        for (var row = 0; row < _height; row++)
-        for (var column = 0; column < _width; column++)
-        {
-            var button = new Button();
-            button.Name = "btn_" + row + "_" + column;
-            button.Click += Btn_Click;
-            button.Background = new SolidColorBrush(Colors.Transparent);
-            button.BorderBrush = new SolidColorBrush(Colors.Transparent);
+        for (var row = 0; row < height; row++)
+            for (var column = 0; column < _width; column++)
+            {
+                var button = new Button();
+                button.Name = "btn_" + row + "_" + column;
+                button.Click += Btn_Click;
+                button.Background = new SolidColorBrush(Colors.Transparent);
+                button.BorderBrush = new SolidColorBrush(Colors.Transparent);
 
 
-            Grid.SetRow(button, row);
-            Grid.SetColumn(button, column);
-            brdMain.BoardGrid.Children.Add(button);
-        }
+                Grid.SetRow(button, row);
+                Grid.SetColumn(button, column);
+                brdMain.BoardGrid.Children.Add(button);
+            }
     }
 
     private void Turn(object sender)
@@ -110,9 +110,9 @@ public partial class MainWindow : Window
     {
         var full = true;
         for (var i = 0; i < width; i++)
-        for (var j = 0; j < height; j++)
-            if (board[j, i] == 0)
-                full = false;
+            for (var j = 0; j < height; j++)
+                if (board[j, i] == 0)
+                    full = false;
         return full;
     }
 
@@ -139,7 +139,7 @@ public partial class MainWindow : Window
             Home.P2Score++;
         }
 
-        Hide();
+        Close();
         Home.Visibility = Visibility.Visible;
     }
 
@@ -149,9 +149,6 @@ public partial class MainWindow : Window
         var boardWidth = brdMain.ActualWidth / Convert.ToDouble(brdMain.BoardGrid.ColumnDefinitions.Count);
         var boardHeight = brdMain.ActualHeight / Convert.ToDouble(brdMain.BoardGrid.RowDefinitions.Count);
 
-        if (height != 3 || width != 3)
-            for (var i = 0; i < 5; i++)
-                input[i]++;
 
         var startX = (input[1] + 0.5) * boardWidth;
         var startY = (input[2] + 0.5) * boardHeight;
@@ -166,7 +163,6 @@ public partial class MainWindow : Window
             Y1 = startY,
             Y2 = endY,
             StrokeThickness = 10
-            //Opacity = 0.8
         };
 
         Grid.Children.Add(line);
@@ -174,12 +170,12 @@ public partial class MainWindow : Window
 
     private int[] ScoreCheck()
     {
-        for (var _height = 0; _height < height - win + 1; _height++)
-        for (var _width = 0; _width < width - win + 1; _width++)
-        {
-            var result = SubCheck(_height, _width, win);
-            if (result[0] != 0) return result;
-        }
+        for (var row = 0; row < height - win + 1; row++)
+            for (var column = 0; column < width - win + 1; column++)
+            {
+                var result = SubCheck(column, row, win);
+                if (result[0] != 0) return result;
+            }
 
         return new[] { 0 };
     }
@@ -192,7 +188,7 @@ public partial class MainWindow : Window
             for (var column = 0; column < size; column++) sum += board[x + row, y + column];
 
             if (sum == size) return new[] { 2, x, y + row, x + size - 1, y + row };
-            if (sum == 10 * size) return new[] { 1, x, y + row, x + size - 1, y + row };
+            if (sum == size * 10) return new[] { 1, x, y + row, x + size - 1, y + row };
             sum = 0;
         }
 
@@ -221,6 +217,10 @@ public partial class MainWindow : Window
             rev--;
         }
 
+        if (sum == size) return new[] { 2, x, y + size - 1, x + size - 1, y };
+
+        if (sum == 10 * size) return new[] { 1, x, y + size - 1, x + size - 1, y };
+
         return new[] { 0 };
     }
 
@@ -246,14 +246,13 @@ public partial class MainWindow : Window
             var btn = child as Button;
             try
             {
-                if (btn.ActualHeight > btn.ActualWidth)
+                if (btn!.ActualHeight > btn.ActualWidth)
                     btn.FontSize = btn.ActualWidth * 0.7;
                 else
                     btn.FontSize = btn.ActualHeight * 0.7;
             }
-            catch
-            {
-            }
+            catch { }
+
         }
     }
 }
