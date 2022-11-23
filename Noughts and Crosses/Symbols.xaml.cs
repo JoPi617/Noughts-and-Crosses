@@ -19,10 +19,8 @@ namespace Noughts_and_Crosses
     /// <summary>
     /// Interaction logic for Symbols.xaml
     /// </summary>
-    public partial class Symbols : UserControl
+    public partial class Symbols
     {
-        public string Symbol { get; set; }
-
         public static ObservableCollection<string> Source { get; set; } = new(new List<string>()
             {
                 "╳",
@@ -32,8 +30,5 @@ namespace Noughts_and_Crosses
                 "✧",
                 "⯐",
             });
-
-
-
     }
 }

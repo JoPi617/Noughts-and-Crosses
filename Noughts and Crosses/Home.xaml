@@ -354,8 +354,9 @@
                   DataContext="{Binding Source={StaticResource Symbols}}" 
                   ItemsSource="{Binding Mode=OneWay, Path=Source}" Margin="40,20,20,20" 
                   />
-        <Button Grid.Row="5" Grid.Column="0" Background="{x:Null}" x:Name="btnCustom1"
-                Foreground="Blue" BorderBrush="Transparent" Margin="20,20,20,20" Click="btnCustom1_Click">
+        <Button Grid.Column="0" Background="{x:Null}" x:Name="btnCustom"
+                Foreground="BurlyWood" BorderBrush="Transparent" Margin="20,20,20,20"
+                Click="btnCustom1_Click">
             <Button.ContentTemplate>
                 <DataTemplate>
                     <Viewbox>
@@ -396,17 +397,6 @@
         <Viewbox Grid.Row="5" Grid.Column="4" >
             <TextBlock x:Name="txtP2Score" Text="Score: 0" Margin="15,0,15,0"/>
         </Viewbox>
-
-        <Button Grid.Row="5" Grid.Column="5" Background="{x:Null}" x:Name="btnCustom2"
-                Foreground="Red" BorderBrush="Transparent" Margin="20,20,20,20">
-            <Button.ContentTemplate>
-                <DataTemplate>
-                    <Viewbox>
-                        <TextBlock Text="Custom symbol"></TextBlock>
-                    </Viewbox>
-                </DataTemplate>
-            </Button.ContentTemplate>
-        </Button>
 
         <Viewbox Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right">
             <TextBlock x:Name="txtHeightLbl"  Text="Height" Margin="0,15,0,15" 

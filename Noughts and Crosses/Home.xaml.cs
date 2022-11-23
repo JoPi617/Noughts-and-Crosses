@@ -49,25 +49,43 @@ public partial class Page1 : Window
     private void clrP1_MouseMove(object sender, MouseEventArgs e)
     {
         txtP1Score.Foreground = txtP1Display.Foreground  = txtP1Name.Foreground
-            = symbP1.Foreground = btnCustom1.Foreground = 
+            = symbP1.Foreground = 
             clrP1.Colour;
     }
 
     private void clrP2_MouseMove(object sender, MouseEventArgs e)
     {
         txtP2Score.Foreground = txtP2Display.Foreground  = txtP2Name.Foreground 
-            = symbP2.Foreground = btnCustom2.Foreground =
+            = symbP2.Foreground =
             clrP2.Colour;
     }
 
     private void btnStart_Click(object sender, RoutedEventArgs e)
     {
+        try
+        {
+            if (ToInt32(txtHeight.Text) < ToInt32(txtWin.Text) | ToInt32(txtWidth.Text) < ToInt32(txtWin.Text))
+            {
+                MessageBox.Show("Win size must be less than size", "Error", MessageBoxButton.OK);
+                return;
+            }
+        }
+        catch
+        {
+            MessageBox.Show("Dimensions must be integers", "Error", MessageBoxButton.OK);
+            return;
+        }
+        if(txtP1Display.Text==txtP2Display.Text)
+        {
+            MessageBox.Show("Player symbols cannot be the same", "Error", MessageBoxButton.OK);
+            return;
+        }
         Visibility = Visibility.Collapsed;
-        var frm1 = new MainWindow(ToInt32(txtHeight.Text), ToInt32(txtWidth.Text), ToInt32(txtWin.Text),
-            txtP1Display.Text, txtP2Display.Text, txtP1Display.Foreground, txtP2Display.Foreground,
-            txtP1Name.Text, txtP2Name.Text);
-        frm1.Home = this;
-        frm1.Show();
+            var frm1 = new MainWindow(ToInt32(txtHeight.Text), ToInt32(txtWidth.Text), ToInt32(txtWin.Text),
+                txtP1Display.Text, txtP2Display.Text, txtP1Display.Foreground, txtP2Display.Foreground,
+                txtP1Name.Text, txtP2Name.Text);
+            frm1.Home = this;
+            frm1.Show();
     }
 
     private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -77,14 +95,12 @@ public partial class Page1 : Window
             btnStart.FontSize = Window.ActualWidth * 0.05;
             symbP1.FontSize = symbP2.FontSize = Window.ActualWidth * 0.02;
         }
-        catch
-        {
-        }
+        catch { }
     }
 
     private void btnCustom1_Click(object sender, RoutedEventArgs e)
     {
-        var cust = new Custom();
-        cust.Show();
+        var custom = new Custom();
+        custom.Show();
     }
 }
