@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,16 +22,18 @@ namespace Noughts_and_Crosses
     public partial class Symbols : UserControl
     {
         public string Symbol { get; set; }
-        public string Group { get; set; }
-        public Symbols()
-        {
-            InitializeComponent();
-        }
 
-        private void btn_Checked(object sender, RoutedEventArgs e)
-        {
-            var btn = sender as RadioButton;
-            Symbol = btn?.Content.ToString()!;
-        }
+        public static ObservableCollection<string> Source { get; set; } = new(new List<string>()
+            {
+                "╳",
+                "◯",
+                "❀",
+                "✪",
+                "✧",
+                "⯐",
+            });
+
+
+
     }
 }

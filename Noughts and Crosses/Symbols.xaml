@@ -6,29 +6,15 @@
              xmlns:local="clr-namespace:Noughts_and_Crosses"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <local:Symbols x:Key="Symbols"/>
+        <!--CollectionViewSource 
+                Source="{Binding Source={x:Static Application.Current} Path="   
+                x:Key="listingDataView" /-->
+    </UserControl.Resources>
     <Grid>
         <Viewbox>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <RadioButton Grid.Row="0" x:Name="btn1" Content="╳" GroupName="symbol" Checked="btn_Checked"/>
-                <RadioButton Grid.Row="1" x:Name="btn2" Content="◯" GroupName="{Binding GroupName, ElementName=btn1}" Checked="btn_Checked"
-                             Foreground="{Binding Foreground, ElementName=btn1}" />
-                <RadioButton Grid.Row="2" x:Name="btn3" Content="♤" GroupName="{Binding GroupName, ElementName=btn1}" Checked="btn_Checked"
-                             Foreground="{Binding Foreground, ElementName=btn1}"/>
-                <RadioButton Grid.Row="3" x:Name="btn4" Content="♡" GroupName="{Binding GroupName, ElementName=btn1}" Checked="btn_Checked"
-                             Foreground="{Binding Foreground, ElementName=btn1}"/>
-                <RadioButton Grid.Row="4" x:Name="btn5" Content="♢" GroupName="{Binding GroupName, ElementName=btn1}" Checked="btn_Checked"
-                             Foreground="{Binding Foreground, ElementName=btn1}"/>
-                <RadioButton Grid.Row="5" x:Name="btn6" Content="♧" GroupName="{Binding GroupName, ElementName=btn1}" Checked="btn_Checked"
-                             Foreground="{Binding Foreground, ElementName=btn1}"/>
-            </Grid>
-        </Viewbox>
+            <ComboBox IsReadOnly="True" DataContext="{Binding Source={StaticResource Symbols}, Path=Source}"/>
+        </Viewbox> 
     </Grid>
 </UserControl>
