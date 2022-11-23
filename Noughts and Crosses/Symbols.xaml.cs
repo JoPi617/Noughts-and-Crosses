@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,8 +23,7 @@ namespace Noughts_and_Crosses
     {
         public string Symbol { get; set; }
 
-        public IEnumerable<string> Source { get; set; } =
-            new List<string>()
+        public static ObservableCollection<string> Source { get; set; } = new(new List<string>()
             {
                 "╳",
                 "◯",
@@ -31,7 +31,9 @@ namespace Noughts_and_Crosses
                 "✪",
                 "✧",
                 "⯐",
-            };
+            });
+
+
 
     }
 }

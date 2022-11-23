@@ -84,6 +84,7 @@ public partial class Page1 : Window
 
     private void btnCustom1_Click(object sender, RoutedEventArgs e)
     {
-
+        var cust = new Custom();
+        cust.Show();
     }
 }
