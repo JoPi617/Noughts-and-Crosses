@@ -18,12 +18,12 @@ public partial class Page1 : Window
         InitializeComponent();
         clrP1.sldB.Value = 255;
         clrP2.sldR.Value = 255;
-        symbP1.btn1.Foreground = clrP1.Colour;
         txtP1Score.Foreground = clrP1.Colour;
-        symbP2.btn1.Foreground = clrP2.Colour;
         txtP2Score.Foreground = clrP2.Colour;
-        symbP1.btn1.GroupName = "p1";
-        symbP1.btn1.GroupName = "p2";
+        symbP1.Foreground = clrP1.Colour;
+        symbP2.Foreground = clrP2.Colour;
+        symbP1.SelectedIndex = 0;
+        symbP2.SelectedIndex = 1;
     }
 
     public int P1Score
@@ -48,13 +48,15 @@ public partial class Page1 : Window
 
     private void clrP1_MouseMove(object sender, MouseEventArgs e)
     {
-        txtP1Score.Foreground = txtP1Display.Foreground = symbP1.btn1.Foreground = txtP1Name.Foreground =
+        txtP1Score.Foreground = txtP1Display.Foreground  = txtP1Name.Foreground
+            = symbP1.Foreground = btnCustom1.Foreground = 
             clrP1.Colour;
     }
 
     private void clrP2_MouseMove(object sender, MouseEventArgs e)
     {
-        txtP2Score.Foreground = txtP2Display.Foreground = symbP2.btn1.Foreground = txtP2Name.Foreground =
+        txtP2Score.Foreground = txtP2Display.Foreground  = txtP2Name.Foreground 
+            = symbP2.Foreground = btnCustom2.Foreground =
             clrP2.Colour;
     }
 
@@ -68,24 +70,20 @@ public partial class Page1 : Window
         frm1.Show();
     }
 
-    private void symbP1_MouseMove(object sender, MouseEventArgs e)
-    {
-        txtP1Display.Text = symbP1.Symbol;
-    }
-
-    private void symbP2_MouseMove(object sender, MouseEventArgs e)
-    {
-        txtP2Display.Text = symbP2.Symbol;
-    }
-
     private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
     {
         try
         {
             btnStart.FontSize = Window.ActualWidth * 0.05;
+            symbP1.FontSize = symbP2.FontSize = Window.ActualWidth * 0.02;
         }
         catch
         {
         }
+    }
+
+    private void btnCustom1_Click(object sender, RoutedEventArgs e)
+    {
+
     }
 }

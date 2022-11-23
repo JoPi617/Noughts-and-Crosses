@@ -145,23 +145,16 @@ public partial class MainWindow : Window
 
     private void Line(int[] input)
     {
-        var color = input[0] == 1 ? p1Color : p2Color;
         var boardWidth = brdMain.ActualWidth / Convert.ToDouble(brdMain.BoardGrid.ColumnDefinitions.Count);
         var boardHeight = brdMain.ActualHeight / Convert.ToDouble(brdMain.BoardGrid.RowDefinitions.Count);
 
-
-        var startX = (input[1] + 0.5) * boardWidth;
-        var startY = (input[2] + 0.5) * boardHeight;
-        var endX = (input[3] + 0.5) * boardWidth;
-        var endY = (input[4] + 0.5) * boardHeight;
-
         var line = new Line
         {
-            Stroke = color,
-            X1 = startX,
-            X2 = endX,
-            Y1 = startY,
-            Y2 = endY,
+            Stroke = input[0] == 1 ? p1Color : p2Color,
+            X1 = (input[1] + 0.5) * boardWidth,
+            X2 = (input[3] + 0.5) * boardWidth,
+            Y1 = (input[2] + 0.5) * boardHeight,
+            Y2 = (input[4] + 0.5) * boardHeight,
             StrokeThickness = 10
         };
 

@@ -21,16 +21,17 @@ namespace Noughts_and_Crosses
     public partial class Symbols : UserControl
     {
         public string Symbol { get; set; }
-        public string Group { get; set; }
-        public Symbols()
-        {
-            InitializeComponent();
-        }
 
-        private void btn_Checked(object sender, RoutedEventArgs e)
-        {
-            var btn = sender as RadioButton;
-            Symbol = btn?.Content.ToString()!;
-        }
+        public IEnumerable<string> Source { get; set; } =
+            new List<string>()
+            {
+                "╳",
+                "◯",
+                "❀",
+                "✪",
+                "✧",
+                "⯐",
+            };
+
     }
 }
