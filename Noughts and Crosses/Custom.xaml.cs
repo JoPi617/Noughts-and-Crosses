@@ -38,10 +38,8 @@ namespace Noughts_and_Crosses
                 var chars = Encoding.BigEndianUnicode.GetChars(bytes);
                 string str = new string(chars);
 
-        
                 Symbols.Source.Add(str);
                 Close();
-
             }
             catch
             {

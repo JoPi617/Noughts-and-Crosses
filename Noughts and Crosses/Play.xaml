@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Noughts_and_Crosses"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="600" SizeChanged="Window_SizeChanged">
+        Title="MainWindow" Height="600" Width="600" SizeChanged="Window_SizeChanged"
+        WindowStartupLocation="CenterScreen">
     <Grid x:Name="Grid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5*" />

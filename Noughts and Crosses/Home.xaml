@@ -9,7 +9,7 @@
       Title="Page1" SizeChanged="Window_SizeChanged"
       x:Name="Window"
       xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2"
-      WindowStartupLocation="CenterOwner">
+      WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
         <!--local:SizeToFontConverter x:Key="SizeToFont" /-->
