@@ -127,7 +127,7 @@ public partial class MainWindow : Window
         foreach (var obj in brdMain.BoardGrid.Children)
         {
             var btn = obj as Button;
-            if (Grid.GetColumn(btn) == best[1]  && Grid.GetRow(btn) == best[0])
+            if (Grid.GetColumn(btn) == best[1] && Grid.GetRow(btn) == best[0])
             {
                 _board[best[0], best[1]] = 1;
                 txtTurn.Text = _p1Sym;
@@ -158,9 +158,9 @@ public partial class MainWindow : Window
                 {
                     if (board[row, column] == 0)
                     {
-                        board[row, column] = -1;
+                        board[row, column] = 1;
                         var value = Minimax(board, depth + 1, !isMax);
-                        bestVal = value > bestVal ? value : bestVal;
+                        bestVal = Math.Max(bestVal,value);
                         board[row, column] = 0;
                     }
 
@@ -178,9 +178,9 @@ public partial class MainWindow : Window
                 {
                     if (board[row, column] == 0)
                     {
-                        board[row, column] = 1;
+                        board[row, column] = -1;
                         var value = Minimax(board, depth + 1, true);
-                        bestVal = value < bestVal ? value : bestVal;
+                        bestVal = Math.Min(bestVal, value);
                         board[row, column] = 0;
                     }
                 }
@@ -201,7 +201,7 @@ public partial class MainWindow : Window
             {
                 if (board[row, column] == 0)
                 {
-                    board[row, column] = -1;
+                    board[row, column] = 1;
                     int moveVal = Minimax(board, 0, false);
                     board[row, column] = 0;
                     if (moveVal > bestVal)
@@ -241,7 +241,7 @@ public partial class MainWindow : Window
         Line(result);
         _winner = result[0].ToString();
 
-        if (_winner == "1")
+        if (_winner == "-1")
         {
             MessageBox.Show($"{_p1Name} is the winner!", "Winner!", MessageBoxButton.OK);
             Home.P1Score++;
@@ -263,7 +263,7 @@ public partial class MainWindow : Window
 
         var line = new Line
         {
-            Stroke = input[0] == 1 ? _p1Color : _p2Color,
+            Stroke = input[0] == -1 ? _p1Color : _p2Color,
             X1 = (input[1] + 0.5) * boardWidth,
             X2 = (input[3] + 0.5) * boardWidth,
             Y1 = (input[2] + 0.5) * boardHeight,
@@ -293,8 +293,8 @@ public partial class MainWindow : Window
         {
             for (var column = 0; column < size; column++) sum += board[x + row, y + column];
 
-            if (sum == size) return new[] { -1, x, y + row, x + size - 1, y + row };
-            if (sum == size * -1) return new[] { 1, x, y + row, x + size - 1, y + row };
+            if (sum == size) return new[] { 1, x, y + row, x + size - 1, y + row };
+            if (sum == size * -1) return new[] { -1, x, y + row, x + size - 1, y + row };
             sum = 0;
         }
 
@@ -303,17 +303,17 @@ public partial class MainWindow : Window
         {
             for (var row = 0; row < size; row++) sum += board[x + row, y + column];
 
-            if (sum == size) return new[] { -1, x + column, y, x + column, y + size - 1 };
-            if (sum == -1 * size) return new[] { 1, x + column, y, x + column, y + size - 1 };
+            if (sum == size) return new[] { 1, x + column, y, x + column, y + size - 1 };
+            if (sum == -1 * size) return new[] { -1, x + column, y, x + column, y + size - 1 };
             sum = 0;
         }
 
         sum = 0;
         for (var i = 0; i < size; i++) sum += board[x + i, y + i];
 
-        if (sum == size) return new[] {-1, x, y, x + size - 1, y + size - 1 };
+        if (sum == size) return new[] {1, x, y, x + size - 1, y + size - 1 };
 
-        if (sum == -1 * size) return new[] {1, x, y, x + size - 1, y + size - 1 };
+        if (sum == -1 * size) return new[] {-1, x, y, x + size - 1, y + size - 1 };
 
         sum = 0;
         var rev = size - 1;
@@ -323,9 +323,9 @@ public partial class MainWindow : Window
             rev--;
         }
 
-        if (sum == size) return new[] { -1, x, y + size - 1, x + size - 1, y };
+        if (sum == size) return new[] { 1, x, y + size - 1, x + size - 1, y };
 
-        if (sum == -1 * size) return new[] { 1, x, y + size - 1, x + size - 1, y };
+        if (sum == -1 * size) return new[] { -1, x, y + size - 1, x + size - 1, y };
 
         return new[] { 0 };
     }
