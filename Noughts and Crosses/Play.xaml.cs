@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Data.Common;
+using System.Diagnostics;
 using System.Numerics;
 using System.Windows;
 using System.Windows.Controls;
@@ -109,45 +110,23 @@ public partial class MainWindow : Window
             else if (FillCheck(_board)) Draw();
 
             _turn = !_turn;
-
-            if (_isComp)
-            {
-                CompTurn();
-                var result2 = ScoreCheck(_board);
-                if (result2[0] != 0) Win(result2);
-                else if (FillCheck(_board)) Draw();
-                _turn = !_turn;
-            }
         }
     }
 
     private void CompTurn()
     {
-        var best = FindBest(_board);
-        foreach (var obj in brdMain.BoardGrid.Children)
-        {
-            var btn = obj as Button;
-            if (Grid.GetColumn(btn) == best[1] && Grid.GetRow(btn) == best[0])
-            {
-                _board[best[0], best[1]] = 1;
-                txtTurn.Text = _p1Sym;
-                txtTurn.Foreground = _p1Color;
-                btn!.Content = _p2Sym;
-                btn.Foreground = _p2Color;
-            }
-        }
+        
     }
 
     #region Minimax
 
-    private int Minimax(int[,] board, int depth, bool isMax)
+    private int Minimax(int[,] board, int depth, bool isMax, int alpha, int beta)
     {
-        Console.WriteLine(depth);
-
         var result = ScoreCheck(board);
         if (result[0] != 0) return result[0];
-        if (FillCheck(board)) return 0;
+        if (FillCheck(board) /*|| (depth>7)*/) return 0;
 
+         //   && (_width > 3 || _height > 3))
 
         if (isMax)
         {
@@ -159,9 +138,11 @@ public partial class MainWindow : Window
                     if (board[row, column] == 0)
                     {
                         board[row, column] = 1;
-                        var value = Minimax(board, depth + 1, !isMax);
-                        bestVal = Math.Max(bestVal,value);
+                        var value = Minimax(board, depth + 1, !isMax,alpha,beta);
                         board[row, column] = 0;
+                        bestVal = Math.Max(bestVal,value);
+                        alpha = Math.Max(alpha, bestVal);
+                        if (beta <= alpha) break;
                     }
 
                 }
@@ -179,9 +160,12 @@ public partial class MainWindow : Window
                     if (board[row, column] == 0)
                     {
                         board[row, column] = -1;
-                        var value = Minimax(board, depth + 1, true);
-                        bestVal = Math.Min(bestVal, value);
+                        var value = Minimax(board, depth + 1, true, alpha, beta);
                         board[row, column] = 0;
+                        bestVal = Math.Min(bestVal, value);
+                        beta = Math.Min(beta, bestVal);
+                        if (beta <= alpha)
+                            break;
                     }
                 }
             }
@@ -202,7 +186,7 @@ public partial class MainWindow : Window
                 if (board[row, column] == 0)
                 {
                     board[row, column] = 1;
-                    int moveVal = Minimax(board, 0, false);
+                    int moveVal = Minimax(board, 0, false, int.MinValue, int.MaxValue);
                     board[row, column] = 0;
                     if (moveVal > bestVal)
                     {
@@ -291,7 +275,7 @@ public partial class MainWindow : Window
         var sum = 0;
         for (var row = 0; row < size; row++) // check rows
         {
-            for (var column = 0; column < size; column++) sum += board[x + row, y + column];
+            for (var column = 0; column < size; column++) sum += board[y + row, x + column];
 
             if (sum == size) return new[] { 1, x, y + row, x + size - 1, y + row };
             if (sum == size * -1) return new[] { -1, x, y + row, x + size - 1, y + row };
@@ -301,7 +285,7 @@ public partial class MainWindow : Window
         sum = 0;
         for (var column = 0; column < size; column++) // check columns
         {
-            for (var row = 0; row < size; row++) sum += board[x + row, y + column];
+            for (var row = 0; row < size; row++) sum += board[y+ row, x + column];
 
             if (sum == size) return new[] { 1, x + column, y, x + column, y + size - 1 };
             if (sum == -1 * size) return new[] { -1, x + column, y, x + column, y + size - 1 };
@@ -309,7 +293,7 @@ public partial class MainWindow : Window
         }
 
         sum = 0;
-        for (var i = 0; i < size; i++) sum += board[x + i, y + i];
+        for (var i = 0; i < size; i++) sum += board[y + i, x + i];
 
         if (sum == size) return new[] {1, x, y, x + size - 1, y + size - 1 };
 
@@ -319,7 +303,7 @@ public partial class MainWindow : Window
         var rev = size - 1;
         for (var i = 0; i < size; i++)
         {
-            sum += board[x + i, y + rev];
+            sum += board[y + i, x + rev];
             rev--;
         }
 
@@ -343,6 +327,18 @@ public partial class MainWindow : Window
     private void Btn_Click(object sender, RoutedEventArgs e)
     {
         Turn(sender);
+        if (_isComp)
+        {
+            var best = FindBest(_board);
+            foreach (var obj in brdMain.BoardGrid.Children)
+            {
+                var btn = obj as Button;
+                if (Grid.GetColumn(btn) == best[1] && Grid.GetRow(btn) == best[0])
+                {
+                    Turn(btn);
+                }
+            }
+        }
     }
 
     private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
