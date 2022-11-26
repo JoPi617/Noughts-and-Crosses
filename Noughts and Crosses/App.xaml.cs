@@ -15,10 +15,9 @@ namespace Noughts_and_Crosses
 }
 
 /* To do:
-        Fix line draw
-        AI
-        Timer
+        AI on big grids
+        Config:
+          Music
+          Backgrounds
         Modes
-        Music
-        Backgrounds
  */

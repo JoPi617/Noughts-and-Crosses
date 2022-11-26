@@ -33,6 +33,8 @@ public partial class MainWindow : Window
     private readonly int _win;
     private string _winner;
     private readonly bool _isComp;
+    private int _time;
+    System.Windows.Threading.DispatcherTimer _dispatcherTimer = new();
 
 
     public MainWindow(int height, int width, int win, string newP1, string newP2, Brush p1Color, Brush p2Color,
@@ -56,6 +58,44 @@ public partial class MainWindow : Window
         txtTurn.Text = _p1Sym;
         txtTurn.Foreground = p1Color;
         _isComp = isComp;
+        _time = 500;
+
+        
+        _dispatcherTimer.Tick += dispatcherTimer_Tick;
+        _dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 10);
+        _dispatcherTimer.Start();
+    }
+
+    private void dispatcherTimer_Tick(object? sender, EventArgs e)
+    {
+        if (ScoreCheck(_board)[0]!=0) return;
+        _time--;
+        if (_time == -1)
+        {
+            if (_turn)
+            {
+                MessageBox.Show($"{_p1Name}, ran out of time, {_p2Name} is the winner!", 
+                    "Winner!", MessageBoxButton.OK);
+                Home.P2Score++;
+            }
+            else
+            {
+                MessageBox.Show($"{_p2Name}, ran out of time, {_p1Name} is the winner!",
+                    "Winner!", MessageBoxButton.OK);
+                Home.P1Score++;
+            }
+            Close();
+            Home.Visibility = Visibility.Visible;
+        }
+
+        if (_time % 100 < 10)
+        {
+            txtTime.Text = $"{_time / 100}.{("0" +_time % 100)}";
+        }
+        else
+        {
+            txtTime.Text = $"{_time / 100}.{(_time % 100)}";
+        }
     }
 
     private void BoardSet(int height, int width)
@@ -110,12 +150,8 @@ public partial class MainWindow : Window
             else if (FillCheck(_board)) Draw();
 
             _turn = !_turn;
+            _time = 500;
         }
-    }
-
-    private void CompTurn()
-    {
-        
     }
 
     #region Minimax
@@ -124,7 +160,7 @@ public partial class MainWindow : Window
     {
         var result = ScoreCheck(board);
         if (result[0] != 0) return result[0];
-        if (FillCheck(board) /*|| (depth>7)*/) return 0;
+        if (FillCheck(board)|| depth>7) return 0;
 
          //   && (_width > 3 || _height > 3))
 
@@ -146,6 +182,8 @@ public partial class MainWindow : Window
                     }
 
                 }
+                if (beta <= alpha) break;
+
             }
 
             return bestVal;
@@ -168,6 +206,7 @@ public partial class MainWindow : Window
                             break;
                     }
                 }
+                if (beta <= alpha) break;
             }
 
             return bestVal;
@@ -242,16 +281,16 @@ public partial class MainWindow : Window
 
     private void Line(int[] input)
     {
-        var boardWidth = brdMain.ActualWidth / Convert.ToDouble(brdMain.BoardGrid.ColumnDefinitions.Count);
-        var boardHeight = brdMain.ActualHeight / Convert.ToDouble(brdMain.BoardGrid.RowDefinitions.Count);
+        var cellWidth = brdMain.ActualWidth / Convert.ToDouble(brdMain.BoardGrid.ColumnDefinitions.Count);
+        var cellHeight = brdMain.ActualHeight / Convert.ToDouble(brdMain.BoardGrid.RowDefinitions.Count);
 
         var line = new Line
         {
             Stroke = input[0] == -1 ? _p1Color : _p2Color,
-            X1 = (input[1] + 0.5) * boardWidth,
-            X2 = (input[3] + 0.5) * boardWidth,
-            Y1 = (input[2] + 0.5) * boardHeight,
-            Y2 = (input[4] + 0.5) * boardHeight,
+            X1 = (input[1] + 0.5) * cellWidth,
+            X2 = (input[3] + 0.5) * cellWidth,
+            Y1 = (input[2] + 0.5) * cellHeight,
+            Y2 = (input[4] + 0.5) * cellHeight,
             StrokeThickness = 10,
         };
 
@@ -329,14 +368,19 @@ public partial class MainWindow : Window
         Turn(sender);
         if (_isComp)
         {
-            var best = FindBest(_board);
-            foreach (var obj in brdMain.BoardGrid.Children)
+            CompTurn();
+        }
+    }
+
+    private void CompTurn()
+    {
+        var best = FindBest(_board);
+        foreach (var obj in brdMain.BoardGrid.Children)
+        {
+            var btn = obj as Button;
+            if (Grid.GetColumn(btn) == best[1] && Grid.GetRow(btn) == best[0])
             {
-                var btn = obj as Button;
-                if (Grid.GetColumn(btn) == best[1] && Grid.GetRow(btn) == best[0])
-                {
-                    Turn(btn);
-                }
+                Turn(btn);
             }
         }
     }
@@ -356,5 +400,11 @@ public partial class MainWindow : Window
             catch { }
 
         }
+    }
+
+    private void Window_Closing(object sender, CancelEventArgs e)
+    {
+        _dispatcherTimer.Stop();
+        Home.Visibility = Visibility.Visible;
     }
 }

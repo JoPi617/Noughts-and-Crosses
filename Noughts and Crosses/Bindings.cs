@@ -19,7 +19,7 @@ namespace Noughts_and_Crosses
     /// <summary>
     /// Interaction logic for Symbols.xaml
     /// </summary>
-    public partial class Symbols
+    public class Symbols
     {
         public static ObservableCollection<string> Source { get; set; } = new(new List<string>()
             {
@@ -30,5 +30,13 @@ namespace Noughts_and_Crosses
                 "✧",
                 "⯐",
             });
+
+        public static IEnumerable<string> Modes { get; set; } = new List<string>()
+        {
+            "Classic",
+            "Random",
+            "Mystery",
+            "Two Turn"
+        };
     }
 }

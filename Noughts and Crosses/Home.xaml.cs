@@ -11,8 +11,13 @@ namespace Noughts_and_Crosses;
 public partial class Page1 : Window
 {
     private int p1Score;
-
     private int p2Score;
+
+    public int width;
+    public int height;
+    public int win;
+    public string mode;
+    public int time;
 
     public Page1()
     {
@@ -65,7 +70,7 @@ public partial class Page1 : Window
     {
         try
         {
-            if (ToInt32(txtHeight.Text) < ToInt32(txtWin.Text) | ToInt32(txtWidth.Text) < ToInt32(txtWin.Text))
+            if (ToInt32(txtHeight.Text) < ToInt32(txtWin.Text) && ToInt32(txtWidth.Text) < ToInt32(txtWin.Text))
             {
                 MessageBox.Show("Win size must be less than size", "Error", MessageBoxButton.OK);
                 return;
@@ -99,9 +104,10 @@ public partial class Page1 : Window
         catch { }
     }
 
-    private void btnCustom1_Click(object sender, RoutedEventArgs e)
+    private void btnSettings_Click(object sender, RoutedEventArgs e)
     {
-        var custom = new Custom();
-        custom.Show();
+        var config = new Config();
+        config.home = this;
+        config.Show();
     }
 }
