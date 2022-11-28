@@ -20,7 +20,7 @@ namespace Noughts_and_Crosses
     /// </summary>
     public partial class Config : Window
     {
-        public Page1 home;
+        public Page1 Home = null!;
         public Config()
         {
             InitializeComponent();
@@ -34,19 +34,35 @@ namespace Noughts_and_Crosses
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
+            if (sldWin.Value > sldWidth.Value && sldWin.Value > sldHeight.Value)
+            {
+                MessageBox.Show("Win size cannot be greater than width and height", "Error", MessageBoxButton.OK);
+                return;
+            }
             Close();
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            home.width = ToInt32(sldWidth.Value);
-            home.height = ToInt32(sldHeight.Value);
-            home.win = ToInt32(sldWin.Value);
-            home.time = ToInt32(sldTime.Value);
-            home.mode = drpModes.Text;
-            home.Music = drpMusic.SelectedIndex;
-            home.Back = drpBack.SelectedIndex;
-            home.Visibility = Visibility.Visible;
+            Home.width = ToInt32(sldWidth.Value);
+            Home.height = ToInt32(sldHeight.Value);
+            Home.win = ToInt32(sldWin.Value);
+            Home.time = ToInt32(sldTime.Value);
+            Home.Mode = drpModes.SelectedIndex;
+            Home.Music = drpMusic.SelectedIndex;
+            Home.Back = drpBack.SelectedIndex;
+            Home.Visibility = Visibility.Visible;
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            sldWidth.Value = Home.width;
+            sldHeight.Value = Home.height;
+            sldWin.Value = Home.win;
+            sldTime.Value = Home.time;
+            drpModes.SelectedIndex = Home.Mode;
+            drpMusic.SelectedIndex = Home.Music;
+            drpBack.SelectedIndex = Home.Back;
         }
     }
 }

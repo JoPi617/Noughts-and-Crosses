@@ -9,13 +9,12 @@ namespace Noughts_and_Crosses
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
-    public partial class App : Application 
+    public partial class App 
     {
     }
 }
 
 /* To do:
+        Fix line draw
         AI on big grids
-        fix Timer
-        Modes
  */

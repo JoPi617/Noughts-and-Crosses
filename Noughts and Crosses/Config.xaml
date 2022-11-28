@@ -8,7 +8,7 @@
         Title="Config" Height="450" Width="600"
         Background="DarkSlateGray"
         WindowStartupLocation="CenterScreen"
-    xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2" Closing="Window_Closing">
+    xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2" Closing="Window_Closing" Loaded="Window_Loaded">
     <Window.Resources>
         <local:Symbols x:Key="Symbols"/>
         <Style x:Key="RepeatButtonTransparent" TargetType="{x:Type RepeatButton}">
@@ -567,7 +567,8 @@
         </Viewbox>
 
         <Slider Grid.Row="0" Grid.Column="2" x:Name="sldWidth"
-                Minimum="1" Maximum="10" Value="3" VerticalAlignment="Center" SmallChange="1"/>
+                Minimum="1" Maximum="10" Value="3" VerticalAlignment="Center" SmallChange="1" 
+                IsSnapToTickEnabled="True" AutoToolTipPlacement="TopLeft"/>
 
         <Viewbox Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Margin="0,10,0,10">
             <TextBlock Background="Transparent" Foreground="BurlyWood"
@@ -575,7 +576,8 @@
         </Viewbox>
 
         <Slider Grid.Row="1" Grid.Column="2" x:Name="sldHeight"
-                Minimum="1" Maximum="10" Value="3" VerticalAlignment="Center" SmallChange="1"/>
+                Minimum="1" Maximum="10" Value="3" VerticalAlignment="Center" SmallChange="1" 
+                IsSnapToTickEnabled="True" AutoToolTipPlacement="TopLeft"/>
 
         <Viewbox Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" Margin="0,10,0,10">
             <TextBlock Background="Transparent" Foreground="BurlyWood"
@@ -583,7 +585,8 @@
         </Viewbox>
 
         <Slider Grid.Row="2" Grid.Column="2" x:Name="sldWin"
-                Minimum="1" Maximum="10" Value="3" VerticalAlignment="Center" SmallChange="1"/>
+                Minimum="1" Maximum="10" Value="3" VerticalAlignment="Center" SmallChange="1"
+                IsSnapToTickEnabled="True" AutoToolTipPlacement="TopLeft"/>
 
         <Viewbox Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Margin="0,10,0,10">
             <TextBlock Background="Transparent" Foreground="BurlyWood"
@@ -591,7 +594,8 @@
         </Viewbox>
 
         <Slider Grid.Row="3" Grid.Column="2" x:Name="sldTime"
-                Minimum="1" Maximum="20" Value="5" VerticalAlignment="Center" SmallChange="1"/>
+                Minimum="1" Maximum="20" Value="5" VerticalAlignment="Center" SmallChange="1" 
+                IsSnapToTickEnabled="True" AutoToolTipPlacement="TopLeft"/>
 
 
         <Viewbox Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right" Margin="0,10,0,10">
@@ -601,9 +605,9 @@
 
         <ComboBox Grid.Row="4" Grid.Column="2" Margin="0,10,200,10" x:Name="drpMusic"
                   Foreground="BurlyWood">
-            <ComboBoxItem Content="Classical" Foreground="BurlyWood" Background="DarkSlateGray"/>
-            <ComboBoxItem Content="Organ" Foreground="BurlyWood" Background="DarkSlateGray"/>
-            <ComboBoxItem Content="Retro" Foreground="BurlyWood" Background="DarkSlateGray"/>
+            <ComboBoxItem Content="Classical" Foreground="BurlyWood" Background="DarkSlateGray" BorderBrush="Transparent"/>
+            <ComboBoxItem Content="Organ" Foreground="BurlyWood" Background="DarkSlateGray" BorderBrush="Transparent"/>
+            <ComboBoxItem Content="Retro" Foreground="BurlyWood" Background="DarkSlateGray" BorderBrush="Transparent"/>
         </ComboBox>
 
         <Viewbox Grid.Row="5" Grid.Column="0" HorizontalAlignment="Right" Margin="0,10,0,10">
@@ -614,9 +618,9 @@
         <ComboBox Grid.Row="5" Grid.Column="2" Margin="0,10,200,10" x:Name="drpBack"
                   Foreground="BurlyWood">
             <ComboBoxItem Content="None" Foreground="BurlyWood" Background="DarkSlateGray"/>
-            <ComboBoxItem Content="Mandlebrot" Foreground="BurlyWood" Background="DarkSlateGray"/>
-            <ComboBoxItem Content="Triangles" Foreground="BurlyWood" Background="DarkSlateGray"/>
-            <ComboBoxItem Content="Squares" Foreground="BurlyWood" Background="DarkSlateGray"/>
+            <ComboBoxItem Content="Mandlebrot" Foreground="BurlyWood" Background="DarkSlateGray" BorderBrush="Transparent"/>
+            <ComboBoxItem Content="Triangles" Foreground="BurlyWood" Background="DarkSlateGray" BorderBrush="Transparent"/>
+            <ComboBoxItem Content="Squares" Foreground="BurlyWood" Background="DarkSlateGray" BorderBrush="Transparent"/>
         </ComboBox>
 
 
@@ -627,9 +631,12 @@
 
 
         <ComboBox Grid.Row="6" Grid.Column="2" Margin="0,10,200,10" x:Name="drpModes"
-                  DataContext="{Binding Source={StaticResource Symbols}}" 
-                  ItemsSource="{Binding Mode=OneWay, Path= Modes}"
-                  Foreground="BurlyWood"/>
+                  Foreground="BurlyWood">
+            <ComboBoxItem Content="Classic" Foreground="BurlyWood" Background="DarkSlateGray" BorderBrush="Transparent"/>
+            <ComboBoxItem Content="Random" Foreground="BurlyWood" Background="DarkSlateGray" BorderBrush="Transparent"/>
+            <ComboBoxItem Content="Mystery" Foreground="BurlyWood" Background="DarkSlateGray" BorderBrush="Transparent"/>
+            <ComboBoxItem Content="Two Turn" Foreground="BurlyWood" Background="DarkSlateGray" BorderBrush="Transparent"/>
+        </ComboBox>
 
         <Button Grid.Row="7" Background="{x:Null}" x:Name="btnCustom"
                                           Foreground="BurlyWood" BorderBrush="Transparent"

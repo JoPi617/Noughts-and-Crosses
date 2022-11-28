@@ -320,7 +320,16 @@
         <Button x:Name="btnStart" Click="btnStart_Click" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2"
                 Background="Transparent" Foreground="Orange" BorderBrush="Transparent" Content="Play!"/>
 
-
+        <Button Grid.Column="5" Background="{x:Null}" x:Name="btnReset"
+                Foreground="BurlyWood" BorderBrush="Transparent" Margin="20,20,20,20" Click="btnReset_Click">
+            <Button.ContentTemplate>
+                <DataTemplate>
+                    <Viewbox>
+                        <TextBlock Text="Reset"/>
+                    </Viewbox>
+                </DataTemplate>
+            </Button.ContentTemplate>
+        </Button>
 
         <Viewbox Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2">
             <Grid>
@@ -397,7 +406,11 @@
             <TextBlock x:Name="txtP2Score" Text="Score: 0" Margin="15,0,15,0"/>
         </Viewbox>
 
-        <CheckBox Grid.Row="2" Grid.Column="4" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+        <Viewbox Grid.Row="2" Grid.Column="4">
+            <CheckBox x:Name="tckComp" HorizontalAlignment="Center"
+                      Content="Computer?" Foreground="Red" VerticalAlignment="Bottom" Margin="10,20,10,0"/>
+        </Viewbox>
+     
 
     </Grid>
 </Window>

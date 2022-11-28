@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.Common;
 using System.Diagnostics;
@@ -28,10 +29,11 @@ public partial class MainWindow : Window
     private readonly Brush _p2Color;
     private readonly string _p2Name;
     private readonly string _p2Sym;
-    private bool _turn;
+    private bool _isP1Turn;
     private readonly int _width;
     private readonly int _win;
     private string _winner;
+    private int _turns;
     private readonly bool _isComp;
     private int _currentTime;
     System.Windows.Threading.DispatcherTimer _dispatcherTimer = new();
@@ -45,7 +47,7 @@ public partial class MainWindow : Window
         InitializeComponent();
 
         BoardSet(height, width);
-        _turn = true;
+        _isP1Turn = true;
         _board = new int[height, width];
         _height = height;
         _width = width;
@@ -62,6 +64,7 @@ public partial class MainWindow : Window
         _isComp = isComp;
         _currentTime = time*100;
         _firstTime = time * 100;
+        _mode = mode;
 
         Background = back;
         MediaPlayer player = new();
@@ -80,15 +83,15 @@ public partial class MainWindow : Window
         _currentTime--;
         if (_currentTime == -1)
         {
-            if (_turn)
+            if (_isP1Turn)
             {
-                MessageBox.Show($"{_p1Name}, ran out of time, {_p2Name} is the winner!", 
+                MessageBox.Show($"{_p1Name} ran out of time, {_p2Name} is the winner!", 
                     "Winner!", MessageBoxButton.OK);
                 Home.P2Score++;
             }
             else
             {
-                MessageBox.Show($"{_p2Name}, ran out of time, {_p1Name} is the winner!",
+                MessageBox.Show($"{_p2Name} ran out of time, {_p1Name} is the winner!",
                     "Winner!", MessageBoxButton.OK);
                 Home.P1Score++;
             }
@@ -96,14 +99,9 @@ public partial class MainWindow : Window
             Home.Visibility = Visibility.Visible;
         }
 
-        if (_currentTime % 100 < 10)
-        {
-            txtTime.Text = $"{_currentTime / 100}.{("0" +_currentTime % 100)}";
-        }
-        else
-        {
-            txtTime.Text = $"{_currentTime / 100}.{(_currentTime % 100)}";
-        }
+        txtTime.Text = _currentTime % 100 < 10 
+            ? $"{_currentTime / 100}.{"0" +_currentTime % 100}" 
+            : $"{_currentTime / 100}.{_currentTime % 100}";
     }
 
     private void BoardSet(int height, int width)
@@ -136,19 +134,15 @@ public partial class MainWindow : Window
         var column = Grid.GetColumn(btn);
         if (_board[row, column] == 0)
         {
-            if (_turn)
+            if (_isP1Turn)
             {
                 _board[row, column] = -1;
-                txtTurn.Text = _p2Sym;
-                txtTurn.Foreground = _p2Color;
                 btn.Content = _p1Sym;
                 btn.Foreground = _p1Color;
             }
             else
             {
                 _board[row, column] = 1;
-                txtTurn.Text = _p1Sym;
-                txtTurn.Foreground = _p1Color;
                 btn.Content = _p2Sym;
                 btn.Foreground = _p2Color;
             }
@@ -157,8 +151,31 @@ public partial class MainWindow : Window
             if (result[0] != 0) Win(result);
             else if (FillCheck(_board)) Draw();
 
-            _turn = !_turn;
             _currentTime = _firstTime;
+
+            switch (_mode)
+            {
+                case "Mystery":
+                    _isP1Turn = !_isP1Turn;
+                    break;
+                case "Classic":
+                    _isP1Turn = !_isP1Turn;
+                    break;
+                case "Random":
+                    var rand = new Random();
+                    if (rand.Next(0, 1) == 1) _isP1Turn = !_isP1Turn;
+                    break;
+                case "Two Turn":
+                    if (_turns == 1)
+                    {
+                        _turns = 0;
+                        _isP1Turn = !_isP1Turn;
+                    }
+                    break;
+            }
+            txtTurn.Text = _isP1Turn ? _p1Sym : _p2Sym;
+            txtTurn.Foreground = _isP1Turn ? _p1Color : _p2Color;
+
         }
     }
 
@@ -252,12 +269,11 @@ public partial class MainWindow : Window
 
     private bool FillCheck(int[,] board)
     {
-        var full = true;
         for (var i = 0; i < _width; i++)
             for (var j = 0; j < _height; j++)
                 if (board[j, i] == 0)
-                    full = false;
-        return full;
+                    return false;
+        return true;
     }
 
     private void Draw()
@@ -373,8 +389,9 @@ public partial class MainWindow : Window
 
     private void Btn_Click(object sender, RoutedEventArgs e)
     {
+        int[,] before = _board;
         Turn(sender);
-        if (_isComp)
+        if (_isComp && _board!= before) //ensure board has changed, e.g. move made
         {
             CompTurn();
         }
@@ -385,8 +402,7 @@ public partial class MainWindow : Window
         var best = FindBest(_board);
         foreach (var obj in brdMain.BoardGrid.Children)
         {
-            var btn = obj as Button;
-            if (Grid.GetColumn(btn) == best[1] && Grid.GetRow(btn) == best[0])
+            if (obj is Button btn && Grid.GetColumn(btn) == best[1] && Grid.GetRow(btn) == best[0])
             {
                 Turn(btn);
             }

@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:Noughts_and_Crosses"
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="600" SizeChanged="Window_SizeChanged"
-        WindowStartupLocation="CenterScreen" Closing="Window_Closing">
+        WindowStartupLocation="CenterScreen" Closing="Window_Closing"
+        Background="DarkSlateGray">
     <Grid x:Name="Grid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2.5*" />
@@ -18,12 +19,10 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="3" Background="DarkSlateGray"/>
-
         <local:UserControl1 x:Name="brdMain" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
 
         <Viewbox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" Margin="0,20,0,20">
-            <TextBlock  Text="Next turn:" Foreground="BurlyWood"/>
+            <TextBlock  Text="Current turn:" Foreground="BurlyWood"/>
         </Viewbox>
 
         <Viewbox Grid.Row="1" Grid.Column="2">

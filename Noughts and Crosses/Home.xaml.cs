@@ -23,7 +23,6 @@ public partial class Page1 : Window
     public int width = 3;
     public int height = 3;
     public int win = 3;
-    public string mode = "classic";
     public int time = 5;
 
     private int music;
@@ -78,7 +77,31 @@ public partial class Page1 : Window
         new ImageBrush(new BitmapImage(new Uri(@"C:\Users\jhp33\source\repos\School\N&C\Noughts and Crosses\Noughts and Crosses\Resources\Square.png"))),
     };
 
+    private int mode;
 
+    public int Mode
+    {
+        get => mode;
+        set
+        {
+            if (value is < 4 and > -1)
+            {
+                mode = value;
+            }
+            else
+            {
+                mode = 0;
+            }
+        }
+    }
+
+    private List<string> modes = new()
+    {
+        "Classic",
+        "Random",
+        "Mystery",
+        "Two Turn",
+    };
 
     public int P1Score
     {
@@ -120,6 +143,21 @@ public partial class Page1 : Window
         symbP2.SelectedIndex = 1;
         player.Open(musics[Music]);
         player.Play();
+        width = 3;
+        height = 3;
+        win = 3;
+        time = 5;
+        p1Score = 0;
+        p2Score = 0;
+        symbP1.SelectedIndex = 0;
+        symbP2.SelectedIndex = 1;
+        txtP1Name.Text = "Player 1";
+        txtP2Name.Text = "Player 2";
+        clrP1.sldR.Value = clrP1.sldG.Value = clrP2.sldG.Value = clrP2.sldB.Value = 0;
+        clrP1.sldB.Value = clrP2.sldR.Value = 255;
+        clrP1_MouseMove(null!,null!);
+        clrP2_MouseMove(null!,null!);
+        tckComp.IsChecked = false;
     }
 
 
@@ -133,7 +171,7 @@ public partial class Page1 : Window
     private void clrP2_MouseMove(object sender, MouseEventArgs e)
     {
         txtP2Score.Foreground = txtP2Display.Foreground  = txtP2Name.Foreground 
-            = symbP2.Foreground =
+            = symbP2.Foreground = tckComp.Foreground =
             clrP2.Colour;
     }
 
@@ -145,11 +183,25 @@ public partial class Page1 : Window
             return;
         }
         Visibility = Visibility.Collapsed;
+        if (mode != 2)
+        {
             var frm1 = new MainWindow(height, width, win,
                 txtP1Display.Text, txtP2Display.Text, txtP1Display.Foreground, txtP2Display.Foreground,
-                txtP1Name.Text, txtP2Name.Text,false, time, mode, Background, musics[music]);
-            frm1.Home = this; 
+                txtP1Name.Text, txtP2Name.Text, (bool)tckComp.IsChecked, time,
+                modes[mode], Background, musics[music]);
+            frm1.Home = this;
             frm1.Show();
+        }
+        else
+        {
+            var frm1 = new MainWindow(height, width, win,
+                "?", "?", Brushes.BurlyWood, Brushes.BurlyWood, 
+                txtP1Name.Text, txtP2Name.Text, (bool)tckComp.IsChecked, time,
+                modes[mode], Background, musics[music]);
+            frm1.Home = this;
+            frm1.Show();
+        }
+            
     }
 
     private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -166,7 +218,12 @@ public partial class Page1 : Window
     {
         Hide();
         var config = new Config();
-        config.home = this;
+        config.Home = this;
         config.Show();
+    }
+
+    private void btnReset_Click(object sender, RoutedEventArgs e)
+    {
+        Window_Loaded(new object(), new RoutedEventArgs());
     }
 }
