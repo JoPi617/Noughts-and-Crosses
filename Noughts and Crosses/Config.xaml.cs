@@ -32,6 +32,11 @@ namespace Noughts_and_Crosses
             custom.Show();
         }
 
+        private void btnBack_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             home.width = ToInt32(sldWidth.Value);
@@ -39,6 +44,9 @@ namespace Noughts_and_Crosses
             home.win = ToInt32(sldWin.Value);
             home.time = ToInt32(sldTime.Value);
             home.mode = drpModes.Text;
+            home.Music = drpMusic.SelectedIndex;
+            home.Back = drpBack.SelectedIndex;
+            home.Visibility = Visibility.Visible;
         }
     }
 }

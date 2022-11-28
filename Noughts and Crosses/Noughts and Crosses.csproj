@@ -9,21 +9,23 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\8bit theme.wav" />
     <None Remove="Resources\cross.png" />
+    <None Remove="Resources\Mandelbrot.png" />
     <None Remove="Resources\Nought.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="Resources\Cross.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Nought.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
+    <None Remove="Resources\orchesta theme.wav" />
+    <None Remove="Resources\organ theme.wav" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\8bit theme.wav" />
+    <EmbeddedResource Include="Resources\Mandelbrot.png" />
+    <Resource Include="Resources\orchesta theme.wav" />
+    <Resource Include="Resources\organ theme.wav" />
   </ItemGroup>
 
 </Project>

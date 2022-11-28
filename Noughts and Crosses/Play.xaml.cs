@@ -33,12 +33,14 @@ public partial class MainWindow : Window
     private readonly int _win;
     private string _winner;
     private readonly bool _isComp;
-    private int _time;
+    private int _currentTime;
     System.Windows.Threading.DispatcherTimer _dispatcherTimer = new();
+    private int _firstTime;
+    public string _mode;
 
 
     public MainWindow(int height, int width, int win, string newP1, string newP2, Brush p1Color, Brush p2Color,
-        string p1Name, string p2Name, bool isComp)
+        string p1Name, string p2Name, bool isComp, int time, string mode, Brush back, Uri music)
     {
         InitializeComponent();
 
@@ -58,7 +60,13 @@ public partial class MainWindow : Window
         txtTurn.Text = _p1Sym;
         txtTurn.Foreground = p1Color;
         _isComp = isComp;
-        _time = 500;
+        _currentTime = time*100;
+        _firstTime = time * 100;
+
+        Background = back;
+        MediaPlayer player = new();
+        player.Open(music);
+        player.Play();
 
         
         _dispatcherTimer.Tick += dispatcherTimer_Tick;
@@ -69,8 +77,8 @@ public partial class MainWindow : Window
     private void dispatcherTimer_Tick(object? sender, EventArgs e)
     {
         if (ScoreCheck(_board)[0]!=0) return;
-        _time--;
-        if (_time == -1)
+        _currentTime--;
+        if (_currentTime == -1)
         {
             if (_turn)
             {
@@ -88,13 +96,13 @@ public partial class MainWindow : Window
             Home.Visibility = Visibility.Visible;
         }
 
-        if (_time % 100 < 10)
+        if (_currentTime % 100 < 10)
         {
-            txtTime.Text = $"{_time / 100}.{("0" +_time % 100)}";
+            txtTime.Text = $"{_currentTime / 100}.{("0" +_currentTime % 100)}";
         }
         else
         {
-            txtTime.Text = $"{_time / 100}.{(_time % 100)}";
+            txtTime.Text = $"{_currentTime / 100}.{(_currentTime % 100)}";
         }
     }
 
@@ -150,7 +158,7 @@ public partial class MainWindow : Window
             else if (FillCheck(_board)) Draw();
 
             _turn = !_turn;
-            _time = 500;
+            _currentTime = _firstTime;
         }
     }
 

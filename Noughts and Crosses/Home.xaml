@@ -9,7 +9,8 @@
       Title="Page1" SizeChanged="Window_SizeChanged"
       x:Name="Window"
       xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2"
-      WindowStartupLocation="CenterScreen">
+      WindowStartupLocation="CenterScreen" Loaded="Window_Loaded"
+      Background="DarkSlateGray">
 
     <Window.Resources>
         <!--local:SizeToFontConverter x:Key="SizeToFont" /-->
@@ -316,13 +317,9 @@
         </Grid.ColumnDefinitions>
 
 
-        <Border Grid.Row="0" Grid.RowSpan="6"
-                Grid.Column="0" Grid.ColumnSpan="6"
-                Background="DarkSlateGray"/>
-
         <Button x:Name="btnStart" Click="btnStart_Click" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2"
-                Background="Transparent" Foreground="Orange" BorderBrush="Transparent" Content="Play!"/> 
-        
+                Background="Transparent" Foreground="Orange" BorderBrush="Transparent" Content="Play!"/>
+
 
 
         <Viewbox Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2">
@@ -400,34 +397,7 @@
             <TextBlock x:Name="txtP2Score" Text="Score: 0" Margin="15,0,15,0"/>
         </Viewbox>
 
-        <Viewbox Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right">
-            <TextBlock x:Name="txtHeightLbl"  Text="Height" Margin="0,15,0,15" 
-                       Background="Transparent" Foreground="BurlyWood" HorizontalAlignment="Right" />
-        </Viewbox>
+        <CheckBox Grid.Row="2" Grid.Column="4" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
 
-        <Viewbox Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left">
-            <TextBox x:Name="txtHeight"  Text="3" Margin="10,15,0,15"
-                     Background="Transparent" Foreground="BurlyWood" BorderBrush="Transparent"/>
-        </Viewbox>
-
-        <Viewbox Grid.Row="2" Grid.Column="2" HorizontalAlignment="Right">
-            <TextBlock x:Name="txtWidthLbl"  Text="Width" Margin="0,15,0,15" 
-                       Background="Transparent" Foreground="BurlyWood" HorizontalAlignment="Right" />
-        </Viewbox>
-
-        <Viewbox Grid.Row="2" Grid.Column="3" HorizontalAlignment="Left">
-            <TextBox x:Name="txtWidth"  Text="3" Margin="10,15,0,15"
-                     Background="Transparent" Foreground="BurlyWood" BorderBrush="Transparent"/>
-        </Viewbox>
-
-        <Viewbox Grid.Row="2" Grid.Column="4" HorizontalAlignment="Right">
-            <TextBlock x:Name="txtWinLbl"  Text="Win" Margin="0,15,0,15" 
-                       Background="Transparent" Foreground="BurlyWood" HorizontalAlignment="Right" />
-        </Viewbox>
-
-        <Viewbox Grid.Row="2" Grid.Column="5" HorizontalAlignment="Left">
-            <TextBox x:Name="txtWin"  Text="3" Margin="10,15,0,15"
-                     Background="Transparent" Foreground="BurlyWood" BorderBrush="Transparent"/>
-        </Viewbox>
     </Grid>
 </Window>

@@ -16,8 +16,6 @@ namespace Noughts_and_Crosses
 
 /* To do:
         AI on big grids
-        Config:
-          Music
-          Backgrounds
+        fix Timer
         Modes
  */
