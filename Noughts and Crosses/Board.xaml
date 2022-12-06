@@ -63,7 +63,5 @@
             </Setter>
         </Style>
     </UserControl.Resources>
-    <Grid x:Name="BoardGrid" ShowGridLines="True">
-        <Button/>
-    </Grid>
+    <Grid x:Name="BoardGrid" ShowGridLines="True"/>
 </UserControl>

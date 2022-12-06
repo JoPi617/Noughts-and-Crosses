@@ -10,7 +10,7 @@
         ResizeMode="NoResize"
         WindowStartupLocation="CenterOwner"
         ShowInTaskbar="False">
-    <Grid>
+    <Grid KeyDown="Grid_KeyDown">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
@@ -25,10 +25,10 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <TextBox Grid.Row="1" Grid.Column="1" Text="Unicode Hex" Grid.ColumnSpan="3"
+        <TextBox Grid.Row="1" Grid.Column="1" Text="Unicode or Character" Grid.ColumnSpan="3"
                  Foreground="BurlyWood" Background="Transparent" BorderBrush="BurlyWood"
                  VerticalAlignment="Center" HorizontalAlignment="Center"
-                 FontSize="18" x:Name="txtEntry"/>
+                 FontSize="12" x:Name="txtEntry"  GotKeyboardFocus="txtEntry_GotKeyboardFocus"/>
 
         <TextBlock Grid.Row="0" Grid.Column="0" x:Name="txt"/>
         <Button Grid.Row="3" Grid.Column="1" Content="OK" Click="OK_Click" 

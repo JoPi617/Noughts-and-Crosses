@@ -34,18 +34,35 @@ namespace Noughts_and_Crosses
         {
             try
             {
-                var bytes = Convert.FromHexString(txtEntry.Text);
-                var chars = Encoding.BigEndianUnicode.GetChars(bytes);
-                string str = new string(chars);
-
-                Symbols.Source.Add(str);
-                Close();
+                var cha = Char.Parse(txtEntry.Text);
+                Symbols.Source.Add(cha+"");
             }
             catch
             {
-                MessageBox.Show("Unrecognised Unicode", "Error", MessageBoxButton.OK);
-                Close();
+                try
+                {
+                    var bytes = Convert.FromHexString(txtEntry.Text);
+                    var chars = Encoding.BigEndianUnicode.GetChars(bytes);
+                    string str = new string(chars);
+
+                    Symbols.Source.Add(str);
+                    Close();
+                }
+                catch
+                {
+                    MessageBox.Show("Unrecognised Unicode", "Error", MessageBoxButton.OK);
+                }
             }
+        }
+
+        private void txtEntry_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            txtEntry.Text = "";
+        }
+
+        private void Grid_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter) OK_Click(new object(), new RoutedEventArgs());
         }
     }
 }

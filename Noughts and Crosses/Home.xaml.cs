@@ -183,26 +183,14 @@ public partial class Page1 : Window
             return;
         }
         Visibility = Visibility.Collapsed;
-        if (mode != 2)
-        {
-            var frm1 = new MainWindow(height, width, win,
+        bool isComp = tckComp.IsChecked != null && (bool)tckComp.IsChecked;
+        var frm1 = new MainWindow(height, width, win,
                 txtP1Display.Text, txtP2Display.Text, txtP1Display.Foreground, txtP2Display.Foreground,
-                txtP1Name.Text, txtP2Name.Text, (bool)tckComp.IsChecked, time,
+                txtP1Name.Text, txtP2Name.Text, isComp, time,
                 modes[mode], Background, musics[music]);
             frm1.Home = this;
             frm1.Show();
         }
-        else
-        {
-            var frm1 = new MainWindow(height, width, win,
-                "?", "?", Brushes.BurlyWood, Brushes.BurlyWood, 
-                txtP1Name.Text, txtP2Name.Text, (bool)tckComp.IsChecked, time,
-                modes[mode], Background, musics[music]);
-            frm1.Home = this;
-            frm1.Show();
-        }
-            
-    }
 
     private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
     {
@@ -217,13 +205,12 @@ public partial class Page1 : Window
     private void btnSettings_Click(object sender, RoutedEventArgs e)
     {
         Hide();
-        var config = new Config();
-        config.Home = this;
+        var config = new Config { Home = this };
         config.Show();
     }
 
     private void btnReset_Click(object sender, RoutedEventArgs e)
     {
-        Window_Loaded(new object(), new RoutedEventArgs());
+        Window_Loaded("", new RoutedEventArgs());
     }
 }

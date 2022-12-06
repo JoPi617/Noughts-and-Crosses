@@ -79,6 +79,10 @@ public partial class MainWindow : Window
 
     private void dispatcherTimer_Tick(object? sender, EventArgs e)
     {
+        if (_isComp && !_isP1Turn)
+        {
+            CompTurn();
+        }
         if (ScoreCheck(_board)[0]!=0) return;
         _currentTime--;
         if (_currentTime == -1)
@@ -127,56 +131,53 @@ public partial class MainWindow : Window
             }
     }
 
-    private void Turn(object sender)
+    private void Turn(Button btn)
     {
-        var btn = (sender as Button)!;
         var row = Grid.GetRow(btn);
         var column = Grid.GetColumn(btn);
-        if (_board[row, column] == 0)
+
+        if (_mode != "Mystery")
         {
-            if (_isP1Turn)
-            {
-                _board[row, column] = -1;
-                btn.Content = _p1Sym;
-                btn.Foreground = _p1Color;
-            }
-            else
-            {
-                _board[row, column] = 1;
-                btn.Content = _p2Sym;
-                btn.Foreground = _p2Color;
-            }
 
-            var result = ScoreCheck(_board);
-            if (result[0] != 0) Win(result);
-            else if (FillCheck(_board)) Draw();
+            _board[row, column] = _isP1Turn ? -1 : 1;
+            btn.Content = _isP1Turn ? _p1Sym : _p2Sym;
+            btn.Foreground = _isP1Turn ? _p1Color : _p2Color;
+        }
+        else
+        {
+            _board[row,column] = _isP1Turn? -1 : 1;
+            btn.Content = "?";
+            btn.Foreground = Brushes.BurlyWood;
+        }
 
-            _currentTime = _firstTime;
+        var result = ScoreCheck(_board);
+        if (result[0] != 0) Win(result);
+        else if (FillCheck(_board)) Draw();
 
-            switch (_mode)
-            {
-                case "Mystery":
+        _currentTime = _firstTime;
+
+        switch (_mode)
+        {
+            case "Mystery":
+            case "Classic":
+                _isP1Turn = !_isP1Turn;
+                break;
+            case "Random":
+                var rand = new Random();
+                if (rand.Next(0, 2) == 1) _isP1Turn = !_isP1Turn;
+                break;
+            case "Two Turn":
+                if (_turns == 1)
+                {
+                    _turns = 0;
                     _isP1Turn = !_isP1Turn;
-                    break;
-                case "Classic":
-                    _isP1Turn = !_isP1Turn;
-                    break;
-                case "Random":
-                    var rand = new Random();
-                    if (rand.Next(0, 1) == 1) _isP1Turn = !_isP1Turn;
-                    break;
-                case "Two Turn":
-                    if (_turns == 1)
-                    {
-                        _turns = 0;
-                        _isP1Turn = !_isP1Turn;
-                    }
-                    break;
-            }
+                }
+                break;
+        }
+
             txtTurn.Text = _isP1Turn ? _p1Sym : _p2Sym;
             txtTurn.Foreground = _isP1Turn ? _p1Color : _p2Color;
-
-        }
+        
     }
 
     #region Minimax
@@ -317,7 +318,8 @@ public partial class MainWindow : Window
             Y2 = (input[4] + 0.5) * cellHeight,
             StrokeThickness = 10,
         };
-
+        Grid.SetColumnSpan(line,_width);
+        Grid.SetRowSpan(line,_height);
         Grid.Children.Add(line);
     }
 
@@ -389,12 +391,8 @@ public partial class MainWindow : Window
 
     private void Btn_Click(object sender, RoutedEventArgs e)
     {
-        int[,] before = _board;
-        Turn(sender);
-        if (_isComp && _board!= before) //ensure board has changed, e.g. move made
-        {
-            CompTurn();
-        }
+        var btn = sender as Button;
+        if (btn != null && _board[Grid.GetRow(btn), Grid.GetColumn(btn)] == 0) Turn(btn);   
     }
 
     private void CompTurn()

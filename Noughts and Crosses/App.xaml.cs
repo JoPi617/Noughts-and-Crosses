@@ -15,6 +15,6 @@ namespace Noughts_and_Crosses
 }
 
 /* To do:
-        Fix line draw
+        Drop down appearance
         AI on big grids
  */

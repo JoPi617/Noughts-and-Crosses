@@ -47,9 +47,9 @@
         </LinearGradientBrush>
         <SolidColorBrush x:Key="ComboBox.Static.Border" Color="BurlyWood"/>
         <SolidColorBrush x:Key="ComboBox.Static.Glyph" Color="BurlyWood"/>
-        <SolidColorBrush x:Key="ComboBox.Static.Editable.Background" Color="#FFFFFFFF"/>
-        <SolidColorBrush x:Key="ComboBox.Static.Editable.Border" Color="#FFABADB3"/>
-        <SolidColorBrush x:Key="ComboBox.Static.Editable.Button.Background" Color="DarkSlateGray"/>
+        <SolidColorBrush x:Key="ComboBox.Static.Editable.Background" Color="Transparent"/>
+        <SolidColorBrush x:Key="ComboBox.Static.Editable.Border" Color="Transparent"/>
+        <SolidColorBrush x:Key="ComboBox.Static.Editable.Button.Background" Color="Transparent"/>
         <SolidColorBrush x:Key="ComboBox.Static.Editable.Button.Border" Color="Transparent"/>
         <LinearGradientBrush x:Key="ComboBox.MouseOver.Background" EndPoint="0,1" StartPoint="0,0">
             <GradientStop Color="#FFECF4FC" Offset="0.0"/>
@@ -395,12 +395,8 @@
         <ComboBox Grid.Column="5" Grid.Row="4" IsReadOnly="True" x:Name="symbP2" Foreground="Red"
                   DataContext="{Binding Source={StaticResource Symbols}, Path=Source}" 
                   ItemsSource="{Binding Mode=OneWay}" 
-                  RenderTransformOrigin="0.5,0.5" Margin="20,20,40,20" >
-            <ComboBox.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform ScaleX="-1"/>
-                </TransformGroup>
-            </ComboBox.RenderTransform>
+                  RenderTransformOrigin="0.5,0.5" Margin="20,20,40,20" FlowDirection="RightToLeft" >
+       
         </ComboBox>
         <Viewbox Grid.Row="5" Grid.Column="4" >
             <TextBlock x:Name="txtP2Score" Text="Score: 0" Margin="15,0,15,0"/>
