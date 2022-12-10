@@ -43,14 +43,15 @@ namespace Noughts_and_Crosses
                 {
                     var bytes = Convert.FromHexString(txtEntry.Text);
                     var chars = Encoding.BigEndianUnicode.GetChars(bytes);
-                    string str = new string(chars);
+                    string str = new(chars);
 
                     Symbols.Source.Add(str);
                     Close();
                 }
                 catch
                 {
-                    MessageBox.Show("Unrecognised Unicode", "Error", MessageBoxButton.OK);
+                    MessageBox.Show("Unrecognised Unicode", "Error", 
+                        MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }

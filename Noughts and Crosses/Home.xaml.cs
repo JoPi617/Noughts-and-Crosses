@@ -133,6 +133,11 @@ public partial class Page1 : Window
 
     private void Window_Loaded(object sender, RoutedEventArgs e)
     {
+        Set();
+    }
+
+    private void Set()
+    {
         clrP1.sldB.Value = 255;
         clrP2.sldR.Value = 255;
         txtP1Score.Foreground = clrP1.Colour;
@@ -148,6 +153,7 @@ public partial class Page1 : Window
         win = 3;
         time = 5;
         p1Score = 0;
+        txtP1Score.Text = txtP2Score.Text = "Score: 0";
         p2Score = 0;
         symbP1.SelectedIndex = 0;
         symbP2.SelectedIndex = 1;
@@ -155,11 +161,10 @@ public partial class Page1 : Window
         txtP2Name.Text = "Player 2";
         clrP1.sldR.Value = clrP1.sldG.Value = clrP2.sldG.Value = clrP2.sldB.Value = 0;
         clrP1.sldB.Value = clrP2.sldR.Value = 255;
-        clrP1_MouseMove(null!,null!);
-        clrP2_MouseMove(null!,null!);
+        clrP1_MouseMove(null!, null!);
+        clrP2_MouseMove(null!, null!);
         tckComp.IsChecked = false;
     }
-
 
     private void clrP1_MouseMove(object sender, MouseEventArgs e)
     {
@@ -179,11 +184,17 @@ public partial class Page1 : Window
     {
         if(txtP1Display.Text==txtP2Display.Text)
         {
-            MessageBox.Show("Player symbols cannot be the same", "Error", MessageBoxButton.OK);
+            MessageBox.Show("Player symbols cannot be the same", "Error",
+                MessageBoxButton.OK, MessageBoxImage.Error);
             return;
         }
         Visibility = Visibility.Collapsed;
         bool isComp = tckComp.IsChecked != null && (bool)tckComp.IsChecked;
+        if (isComp && (height>3 || width>3))
+        {
+            MessageBox.Show("Warning: computer player may be slow on larger grids", "Warning",
+                MessageBoxButton.OK, MessageBoxImage.Warning);
+        }
         var frm1 = new MainWindow(height, width, win,
                 txtP1Display.Text, txtP2Display.Text, txtP1Display.Foreground, txtP2Display.Foreground,
                 txtP1Name.Text, txtP2Name.Text, isComp, time,
@@ -211,6 +222,6 @@ public partial class Page1 : Window
 
     private void btnReset_Click(object sender, RoutedEventArgs e)
     {
-        Window_Loaded("", new RoutedEventArgs());
+        Set();
     }
 }

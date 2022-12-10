@@ -13,8 +13,3 @@ namespace Noughts_and_Crosses
     {
     }
 }
-
-/* To do:
-        Drop down appearance
-        AI on big grids
- */

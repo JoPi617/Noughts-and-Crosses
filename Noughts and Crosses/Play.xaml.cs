@@ -37,8 +37,8 @@ public partial class MainWindow : Window
     private readonly bool _isComp;
     private int _currentTime;
     System.Windows.Threading.DispatcherTimer _dispatcherTimer = new();
-    private int _firstTime;
-    public string _mode;
+    private readonly int _firstTime;
+    public string Mode;
 
 
     public MainWindow(int height, int width, int win, string newP1, string newP2, Brush p1Color, Brush p2Color,
@@ -64,7 +64,7 @@ public partial class MainWindow : Window
         _isComp = isComp;
         _currentTime = time*100;
         _firstTime = time * 100;
-        _mode = mode;
+        Mode = mode;
 
         Background = back;
         MediaPlayer player = new();
@@ -136,7 +136,7 @@ public partial class MainWindow : Window
         var row = Grid.GetRow(btn);
         var column = Grid.GetColumn(btn);
 
-        if (_mode != "Mystery")
+        if (Mode != "Mystery")
         {
 
             _board[row, column] = _isP1Turn ? -1 : 1;
@@ -156,7 +156,7 @@ public partial class MainWindow : Window
 
         _currentTime = _firstTime;
 
-        switch (_mode)
+        switch (Mode)
         {
             case "Mystery":
             case "Classic":
@@ -185,10 +185,10 @@ public partial class MainWindow : Window
     private int Minimax(int[,] board, int depth, bool isMax, int alpha, int beta)
     {
         var result = ScoreCheck(board);
-        if (result[0] != 0) return result[0];
-        if (FillCheck(board)|| depth>7) return 0;
+        if (result[0] != 0) return result[0] * 11 + result[0] > 0 ? depth : -depth;
+        if (FillCheck(board) || depth>5) return 0;
 
-         //   && (_width > 3 || _height > 3))
+        //   && (_width > 3 || _height > 3))
 
         if (isMax)
         {
