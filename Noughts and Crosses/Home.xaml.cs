@@ -4,7 +4,6 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using static System.Convert;
 
 namespace Noughts_and_Crosses;
 
@@ -13,119 +12,6 @@ namespace Noughts_and_Crosses;
 /// </summary>
 public partial class Page1 : Window
 {
-    #region Fields
-
-    private MediaPlayer player = new();
-
-    private int p1Score;
-    private int p2Score;
-
-    public int width = 3;
-    public int height = 3;
-    public int win = 3;
-    public int time = 5;
-
-    private int music;
-    public int Music
-    {
-        get => music;
-        set
-        {
-            if (value is < 3 and > -1)
-            {
-                music = value;
-                player.Open(musics[value]);
-                player.Play();
-            }
-            else
-            {
-                player.Stop();
-            }
-        }
-    }
-    private List<Uri> musics = new()
-    {
-        new(@"C:\\Users\\jhp33\\source\\repos\\School\\N&C\\Noughts and Crosses\\Noughts and Crosses\\Resources\\orchesta theme.wav"),
-        new(@"C:\\Users\\jhp33\\source\\repos\\School\\N&C\\Noughts and Crosses\\Noughts and Crosses\\Resources\\8bit theme.wav"),
-        new(@"C:\Users\jhp33\source\repos\School\N&C\Noughts and Crosses\Noughts and Crosses\Resources\organ theme.wav"),
-    };
-
-    private int back;
-
-    public int Back
-    {
-        get => back;
-        set
-        {
-            if (value is < 3 and > -1)
-            {
-                back = value;
-                Background = backs[value];
-            }
-            else
-            {
-                Background = new SolidColorBrush(Colors.DarkSlateGray);
-            }
-        }
-    }
-
-    private List<Brush> backs = new()
-    {
-        new SolidColorBrush(Colors.DarkSlateGray),
-        new ImageBrush(new BitmapImage(new Uri(@"C:\Users\jhp33\source\repos\School\N&C\Noughts and Crosses\Noughts and Crosses\Resources\Mandelbrot.png"))),
-        new ImageBrush(new BitmapImage(new Uri(@"C:\Users\jhp33\source\repos\School\N&C\Noughts and Crosses\Noughts and Crosses\Resources\Snowflake.png"))),
-        new ImageBrush(new BitmapImage(new Uri(@"C:\Users\jhp33\source\repos\School\N&C\Noughts and Crosses\Noughts and Crosses\Resources\Square.png"))),
-    };
-
-    private int mode;
-
-    public int Mode
-    {
-        get => mode;
-        set
-        {
-            if (value is < 4 and > -1)
-            {
-                mode = value;
-            }
-            else
-            {
-                mode = 0;
-            }
-        }
-    }
-
-    private List<string> modes = new()
-    {
-        "Classic",
-        "Random",
-        "Mystery",
-        "Two Turn",
-    };
-
-    public int P1Score
-    {
-        get => p1Score;
-        set
-        {
-            txtP1Score.Text = $"Score: {value}";
-            p1Score = value;
-        }
-    }
-
-    public int P2Score
-    {
-        get => p2Score;
-        set
-        {
-            txtP2Score.Text = $"Score: {value}";
-            p2Score = value;
-        }
-    }
-
-    #endregion
-
-
     public Page1()
     {
         InitializeComponent();
@@ -168,40 +54,39 @@ public partial class Page1 : Window
 
     private void clrP1_MouseMove(object sender, MouseEventArgs e)
     {
-        txtP1Score.Foreground = txtP1Display.Foreground  = txtP1Name.Foreground
-            = symbP1.Foreground = 
-            clrP1.Colour;
+        txtP1Score.Foreground = txtP1Display.Foreground = txtP1Name.Foreground
+            = symbP1.Foreground =
+                clrP1.Colour;
     }
 
     private void clrP2_MouseMove(object sender, MouseEventArgs e)
     {
-        txtP2Score.Foreground = txtP2Display.Foreground  = txtP2Name.Foreground 
+        txtP2Score.Foreground = txtP2Display.Foreground = txtP2Name.Foreground
             = symbP2.Foreground = tckComp.Foreground =
-            clrP2.Colour;
+                clrP2.Colour;
     }
 
     private void btnStart_Click(object sender, RoutedEventArgs e)
     {
-        if(txtP1Display.Text==txtP2Display.Text)
+        if (txtP1Display.Text == txtP2Display.Text)
         {
             MessageBox.Show("Player symbols cannot be the same", "Error",
                 MessageBoxButton.OK, MessageBoxImage.Error);
             return;
         }
+
         Visibility = Visibility.Collapsed;
-        bool isComp = tckComp.IsChecked != null && (bool)tckComp.IsChecked;
-        if (isComp && (height>3 || width>3))
-        {
+        var isComp = tckComp.IsChecked != null && (bool)tckComp.IsChecked;
+        if (isComp && (height > 3 || width > 3))
             MessageBox.Show("Warning: computer player may be slow on larger grids", "Warning",
                 MessageBoxButton.OK, MessageBoxImage.Warning);
-        }
         var frm1 = new MainWindow(height, width, win,
-                txtP1Display.Text, txtP2Display.Text, txtP1Display.Foreground, txtP2Display.Foreground,
-                txtP1Name.Text, txtP2Name.Text, isComp, time,
-                modes[mode], Background, musics[music]);
-            frm1.Home = this;
-            frm1.Show();
-        }
+            txtP1Display.Text, txtP2Display.Text, txtP1Display.Foreground, txtP2Display.Foreground,
+            txtP1Name.Text, txtP2Name.Text, isComp, time,
+            modes[mode], Background, musics[music]);
+        frm1.Home = this;
+        frm1.Show();
+    }
 
     private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
     {
@@ -210,7 +95,9 @@ public partial class Page1 : Window
             btnStart.FontSize = Window.ActualWidth * 0.05;
             symbP1.FontSize = symbP2.FontSize = Window.ActualWidth * 0.02;
         }
-        catch { }
+        catch
+        {
+        }
     }
 
     private void btnSettings_Click(object sender, RoutedEventArgs e)
@@ -224,4 +111,120 @@ public partial class Page1 : Window
     {
         Set();
     }
+
+    #region Fields
+
+    private readonly MediaPlayer player = new();
+
+    private int p1Score;
+    private int p2Score;
+
+    public int width = 3;
+    public int height = 3;
+    public int win = 3;
+    public int time = 5;
+
+    private int music;
+
+    public int Music
+    {
+        get => music;
+        set
+        {
+            if (value is < 3 and > -1)
+            {
+                music = value;
+                player.Open(musics[value]);
+                player.Play();
+            }
+            else
+            {
+                player.Stop();
+            }
+        }
+    }
+
+    private readonly List<Uri> musics = new()
+    {
+        new Uri(
+            @"C:\\Users\\jhp33\\source\\repos\\School\\N&C\\Noughts and Crosses\\Noughts and Crosses\\Resources\\orchesta theme.wav"),
+        new Uri(
+            @"C:\\Users\\jhp33\\source\\repos\\School\\N&C\\Noughts and Crosses\\Noughts and Crosses\\Resources\\8bit theme.wav"),
+        new Uri(
+            @"C:\Users\jhp33\source\repos\School\N&C\Noughts and Crosses\Noughts and Crosses\Resources\organ theme.wav")
+    };
+
+    private int back;
+
+    public int Back
+    {
+        get => back;
+        set
+        {
+            if (value is < 3 and > -1)
+            {
+                back = value;
+                Background = backs[value];
+            }
+            else
+            {
+                Background = new SolidColorBrush(Colors.DarkSlateGray);
+            }
+        }
+    }
+
+    private readonly List<Brush> backs = new()
+    {
+        new SolidColorBrush(Colors.DarkSlateGray),
+        new ImageBrush(new BitmapImage(new Uri(
+            @"C:\Users\jhp33\source\repos\School\N&C\Noughts and Crosses\Noughts and Crosses\Resources\Mandelbrot.png"))),
+        new ImageBrush(new BitmapImage(new Uri(
+            @"C:\Users\jhp33\source\repos\School\N&C\Noughts and Crosses\Noughts and Crosses\Resources\Snowflake.png"))),
+        new ImageBrush(new BitmapImage(new Uri(
+            @"C:\Users\jhp33\source\repos\School\N&C\Noughts and Crosses\Noughts and Crosses\Resources\Square.png")))
+    };
+
+    private int mode;
+
+    public int Mode
+    {
+        get => mode;
+        set
+        {
+            if (value is < 4 and > -1)
+                mode = value;
+            else
+                mode = 0;
+        }
+    }
+
+    private readonly List<string> modes = new()
+    {
+        "Classic",
+        "Random",
+        "Mystery",
+        "Two Turn"
+    };
+
+    public int P1Score
+    {
+        get => p1Score;
+        set
+        {
+            txtP1Score.Text = $"Score: {value}";
+            p1Score = value;
+        }
+    }
+
+    public int P2Score
+    {
+        get => p2Score;
+        set
+        {
+            txtP2Score.Text = $"Score: {value}";
+            p2Score = value;
+        }
+    }
+
+    #endregion
 }

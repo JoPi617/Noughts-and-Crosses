@@ -1,27 +1,25 @@
-﻿using static System.Convert;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-
 using System.Windows.Media;
-using Color = System.Windows.Media.Color;
+using static System.Convert;
 
-namespace Noughts_and_Crosses
+namespace Noughts_and_Crosses;
+
+/// <summary>
+///     Interaction logic for Colours.xaml
+/// </summary>
+public partial class Colours : UserControl
 {
-    /// <summary>
-    /// Interaction logic for Colours.xaml
-    /// </summary>
-    public partial class Colours : UserControl
+    public Colours()
     {
-        public System.Windows.Media.Brush Colour { get; set; }
-        public Colours()
-        {
-            InitializeComponent();
-            Colour = new SolidColorBrush(Colors.Red);
-        }
+        InitializeComponent();
+        Colour = new SolidColorBrush(Colors.Red);
+    }
 
-        private void Value_Changed(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            Colour = new SolidColorBrush(Color.FromRgb(ToByte(sldR.Value), ToByte(sldG.Value), ToByte(sldB.Value)));
-        }
+    public Brush Colour { get; set; }
+
+    private void Value_Changed(object sender, RoutedPropertyChangedEventArgs<double> e)
+    {
+        Colour = new SolidColorBrush(Color.FromRgb(ToByte(sldR.Value), ToByte(sldG.Value), ToByte(sldB.Value)));
     }
 }
