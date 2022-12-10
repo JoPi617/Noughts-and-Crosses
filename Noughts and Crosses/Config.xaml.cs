@@ -15,13 +15,17 @@ public partial class Config : Window
     {
         InitializeComponent();
     }
-
+    /// <summary>
+    /// Bring up custom form
+    /// </summary>
     private void btnCustom1_Click(object sender, RoutedEventArgs e)
     {
         var custom = new Custom();
         custom.Show();
     }
-
+    /// <summary>
+    /// Close if win value is valid
+    /// </summary>
     private void btnBack_Click(object sender, RoutedEventArgs e)
     {
         if (sldWin.Value > sldWidth.Value && sldWin.Value > sldHeight.Value)
@@ -32,7 +36,9 @@ public partial class Config : Window
 
         Close();
     }
-
+    /// <summary>
+    /// Set home parameters to current
+    /// </summary>
     private void Window_Closing(object sender, CancelEventArgs e)
     {
         Home.width = ToInt32(sldWidth.Value);
@@ -44,7 +50,9 @@ public partial class Config : Window
         Home.Back = drpBack.SelectedIndex;
         Home.Visibility = Visibility.Visible;
     }
-
+    /// <summary>
+    /// Set current things to home
+    /// </summary>
     private void Window_Loaded(object sender, RoutedEventArgs e)
     {
         sldWidth.Value = Home.width;

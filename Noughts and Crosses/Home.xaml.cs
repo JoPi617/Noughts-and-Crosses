@@ -21,7 +21,9 @@ public partial class Page1 : Window
     {
         Set();
     }
-
+    /// <summary>
+    /// Reset and update all values
+    /// </summary>
     private void Set()
     {
         clrP1.sldB.Value = 255;
@@ -51,14 +53,18 @@ public partial class Page1 : Window
         clrP2_MouseMove(null!, null!);
         tckComp.IsChecked = false;
     }
-
+    /// <summary>
+    /// If sliders changed, change all P1 colours
+    /// </summary>
     private void clrP1_MouseMove(object sender, MouseEventArgs e)
     {
         txtP1Score.Foreground = txtP1Display.Foreground = txtP1Name.Foreground
             = symbP1.Foreground =
                 clrP1.Colour;
     }
-
+    // <summary>
+    /// If sliders changed, change all P2 colours
+    /// </summary>
     private void clrP2_MouseMove(object sender, MouseEventArgs e)
     {
         txtP2Score.Foreground = txtP2Display.Foreground = txtP2Name.Foreground
@@ -68,7 +74,7 @@ public partial class Page1 : Window
 
     private void btnStart_Click(object sender, RoutedEventArgs e)
     {
-        if (txtP1Display.Text == txtP2Display.Text)
+        if (txtP1Display.Text == txtP2Display.Text) //Ensure symbols aren't same, throw error
         {
             MessageBox.Show("Player symbols cannot be the same", "Error",
                 MessageBoxButton.OK, MessageBoxImage.Error);
@@ -76,11 +82,11 @@ public partial class Page1 : Window
         }
 
         Visibility = Visibility.Collapsed;
-        var isComp = tckComp.IsChecked != null && (bool)tckComp.IsChecked;
-        if (isComp && (height > 3 || width > 3))
+        var isComp = tckComp.IsChecked != null && (bool)tckComp.IsChecked; //Bypass nullable warning
+        if (isComp && (height > 3 || width > 3)) //Warn for slow AI
             MessageBox.Show("Warning: computer player may be slow on larger grids", "Warning",
-                MessageBoxButton.OK, MessageBoxImage.Warning);
-        var frm1 = new MainWindow(height, width, win,
+                MessageBoxButton.OK, MessageBoxImage.Warning); 
+        var frm1 = new MainWindow(height, width, win, //Open new window
             txtP1Display.Text, txtP2Display.Text, txtP1Display.Foreground, txtP2Display.Foreground,
             txtP1Name.Text, txtP2Name.Text, isComp, time,
             modes[mode], Background, musics[music]);
@@ -90,16 +96,18 @@ public partial class Page1 : Window
 
     private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
     {
-        try
+        try //scale button text
         {
             btnStart.FontSize = Window.ActualWidth * 0.05;
             symbP1.FontSize = symbP2.FontSize = Window.ActualWidth * 0.02;
         }
-        catch
+        catch //Suppress errors if unitialised
         {
         }
     }
-
+    /// <summary>
+    /// Open config form
+    /// </summary>
     private void btnSettings_Click(object sender, RoutedEventArgs e)
     {
         Hide();

@@ -23,16 +23,16 @@ public partial class Custom : Window
 
     private void OK_Click(object sender, RoutedEventArgs e)
     {
-        try
+        try //add character
         {
             var cha = char.Parse(txtEntry.Text);
             Symbols.Source.Add(cha + "");
         }
         catch
         {
-            try
+            try //convert hex to character
             {
-                var bytes = Convert.FromHexString(txtEntry.Text);
+                var bytes = Convert.FromHexString(txtEntry.Text); 
                 var chars = Encoding.BigEndianUnicode.GetChars(bytes);
                 string str = new(chars);
 
@@ -46,12 +46,17 @@ public partial class Custom : Window
             }
         }
     }
-
+    /// <summary>
+    /// Clear default on entry
+    /// </summary>
     private void txtEntry_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
     {
         txtEntry.Text = "";
     }
 
+    /// <summary>
+    /// Return if enter pressed
+    /// </summary>
     private void Grid_KeyDown(object sender, KeyEventArgs e)
     {
         if (e.Key == Key.Enter) OK_Click(new object(), new RoutedEventArgs());

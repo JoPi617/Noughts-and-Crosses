@@ -35,7 +35,9 @@ public partial class MainWindow : Window
     public Page1 Home = null!;
     public string Mode;
 
-
+    /// <summary>
+    /// Inititalise all values, and start music and tiner
+    /// </summary>
     public MainWindow(int height, int width, int win, string newP1, string newP2, Brush p1Color, Brush p2Color,
         string p1Name, string p2Name, bool isComp, int time, string mode, Brush back, Uri music)
     {
@@ -71,7 +73,9 @@ public partial class MainWindow : Window
         _dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 10);
         _dispatcherTimer.Start();
     }
-
+    /// <summary>
+    /// Check for CPU turn,decrement time, then check running out of time, 
+    /// </summary>
     private void dispatcherTimer_Tick(object? sender, EventArgs e)
     {
         if (_isComp && !_isP1Turn) CompTurn();
@@ -100,7 +104,11 @@ public partial class MainWindow : Window
             ? $"{_currentTime / 100}.{"0" + _currentTime % 100}"
             : $"{_currentTime / 100}.{_currentTime % 100}";
     }
-
+    /// <summary>
+    /// Initialise board given height and width with buttons
+    /// </summary>
+    /// <param name="height"></param>
+    /// <param name="width"></param>
     private void BoardSet(int height, int width)
     {
         for (var i = 0; i < height; i++) brdMain.BoardGrid.RowDefinitions.Add(new RowDefinition());
@@ -126,52 +134,57 @@ public partial class MainWindow : Window
 
     private void Turn(Button btn)
     {
-        var row = Grid.GetRow(btn);
+        var row = Grid.GetRow(btn);         //Get row and column for element
         var column = Grid.GetColumn(btn);
 
-        if (Mode != "Mystery")
+        if (Mode != "Mystery") // Set content to correct
         {
             _board[row, column] = _isP1Turn ? -1 : 1;
             btn.Content = _isP1Turn ? _p1Sym : _p2Sym;
             btn.Foreground = _isP1Turn ? _p1Color : _p2Color;
         }
-        else
+        else //Set content to mystery
         {
             _board[row, column] = _isP1Turn ? -1 : 1;
             btn.Content = "?";
             btn.Foreground = Brushes.BurlyWood;
         }
 
-        var result = ScoreCheck(_board);
+        var result = ScoreCheck(_board); // Check for win and draw
         if (result[0] != 0) Win(result);
         else if (FillCheck(_board)) Draw();
 
-        _currentTime = _firstTime;
+        _currentTime = _firstTime; //Reset timer
 
         switch (Mode)
         {
             case "Mystery":
-            case "Classic":
+            case "Classic":             //Change turn
                 _isP1Turn = !_isP1Turn;
                 break;
-            case "Random":
-                var rand = new Random();
+            case "Random": 
+                var rand = new Random(); //Change on coin toss
                 if (rand.Next(0, 2) == 1) _isP1Turn = !_isP1Turn;
                 break;
-            case "Two Turn":
-                if (_turns == 1)
+            case "Two Turn": 
+                if (_turns == 1) //If turn taken, invert
                 {
                     _turns = 0;
                     _isP1Turn = !_isP1Turn;
                 }
-
+                else
+                {
+                    _turns++;
+                }
                 break;
         }
 
-        txtTurn.Text = _isP1Turn ? _p1Sym : _p2Sym;
+        txtTurn.Text = _isP1Turn ? _p1Sym : _p2Sym; //set text and colour for next turn
         txtTurn.Foreground = _isP1Turn ? _p1Color : _p2Color;
     }
-
+    /// <summary>
+    /// Check if every element in board is full
+    /// </summary>
     private bool FillCheck(int[,] board)
     {
         for (var i = 0; i < _width; i++)
@@ -180,14 +193,19 @@ public partial class MainWindow : Window
                 return false;
         return true;
     }
-
+    /// <summary>
+    /// Show draw screen and return
+    /// </summary>
     private void Draw()
     {
         MessageBox.Show("It's a draw!", "Draw!", MessageBoxButton.OK);
         Hide();
         Home.Visibility = Visibility.Visible;
     }
-
+    /// <summary>
+    /// Get line, show win screen, return
+    /// </summary>
+    /// <param name="result"></param>
     private void Win(int[] result)
     {
         Line(result);
@@ -207,7 +225,10 @@ public partial class MainWindow : Window
         Close();
         Home.Visibility = Visibility.Visible;
     }
-
+    /// <summary>
+    /// Draw line with two grid references and colour
+    /// </summary>
+    /// <param name="input"></param>
     private void Line(int[] input)
     {
         var cellWidth = brdMain.ActualWidth / Convert.ToDouble(brdMain.BoardGrid.ColumnDefinitions.Count);
@@ -226,7 +247,9 @@ public partial class MainWindow : Window
         Grid.SetRowSpan(line, _height);
         Grid.Children.Add(line);
     }
-
+    /// <summary>
+    /// Check winner in every sub-grid
+    /// </summary>
     private int[] ScoreCheck(int[,] board)
     {
         for (var row = 0; row < _height - _win + 1; row++)
@@ -238,7 +261,9 @@ public partial class MainWindow : Window
 
         return new[] { 0 };
     }
-
+    /// <summary>
+    /// For sub-grid, check every row, column and diagonal
+    /// </summary>
     private int[] SubCheck(int[,] board, int x, int y, int size)
     {
         var sum = 0;
@@ -283,22 +308,18 @@ public partial class MainWindow : Window
         return new[] { 0 };
     }
 
-    public ImageBrush ToBrush(string input)
-    {
-        return new ImageBrush(new BitmapImage(new Uri($"pack://application:,,,/Resources/{input}.png")));
-    }
-
-    public ImageSource ToSource(string input)
-    {
-        return new BitmapImage(new Uri("pack://application:,,,/Resources/" + input + ".png"));
-    }
-
+    /// <summary>
+    /// Call click method with given button, if is empty
+    /// </summary>
     private void Btn_Click(object sender, RoutedEventArgs e)
     {
         var btn = sender as Button;
         if (btn != null && _board[Grid.GetRow(btn), Grid.GetColumn(btn)] == 0) Turn(btn);
     }
 
+    /// <summary>
+    /// Call click method for best button
+    /// </summary>
     private void CompTurn()
     {
         var best = FindBest(_board);
@@ -306,7 +327,9 @@ public partial class MainWindow : Window
             if (obj is Button btn && Grid.GetColumn(btn) == best[1] && Grid.GetRow(btn) == best[0])
                 Turn(btn);
     }
-
+    /// <summary>
+    /// Scale font size
+    /// </summary>
     private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
     {
         foreach (var child in brdMain.BoardGrid.Children)
@@ -324,22 +347,22 @@ public partial class MainWindow : Window
             }
         }
     }
-
+    /// <summary>
+    /// Stop timer and show home
+    /// </summary>
     private void Window_Closing(object sender, CancelEventArgs e)
     {
         _dispatcherTimer.Stop();
         Home.Visibility = Visibility.Visible;
     }
 
-    #region Minimax
+    #region Minimax 
 
     private int Minimax(int[,] board, int depth, bool isMax, int alpha, int beta)
     {
         var result = ScoreCheck(board);
         if (result[0] != 0) return result[0] * 11 + result[0] > 0 ? depth : -depth;
         if (FillCheck(board) || depth > 5) return 0;
-
-        //   && (_width > 3 || _height > 3))
 
         if (isMax)
         {
