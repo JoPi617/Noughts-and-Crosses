@@ -62,5 +62,6 @@ public partial class Config : Window
         drpModes.SelectedIndex = Home.Mode;
         drpMusic.SelectedIndex = Home.Music;
         drpBack.SelectedIndex = Home.Back;
+        Background = Home.Background;
     }
 }

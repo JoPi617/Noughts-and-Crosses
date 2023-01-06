@@ -27,6 +27,7 @@ public partial class Custom : Window
         {
             var cha = char.Parse(txtEntry.Text);
             Symbols.Source.Add(cha + "");
+            Close();
         }
         catch
         {

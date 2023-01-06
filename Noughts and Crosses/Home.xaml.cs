@@ -20,6 +20,8 @@ public partial class Page1 : Window
     private void Window_Loaded(object sender, RoutedEventArgs e)
     {
         Set();
+        Width = 600;
+        Height = 450;
     }
     /// <summary>
     /// Reset and update all values
@@ -111,7 +113,8 @@ public partial class Page1 : Window
     private void btnSettings_Click(object sender, RoutedEventArgs e)
     {
         Hide();
-        var config = new Config { Home = this };
+        var config = new Config();
+        config.Home = this;
         config.Show();
     }
 
@@ -155,11 +158,11 @@ public partial class Page1 : Window
     private readonly List<Uri> musics = new()
     {
         new Uri(
-            @"C:\\Users\\jhp33\\source\\repos\\School\\N&C\\Noughts and Crosses\\Noughts and Crosses\\Resources\\orchesta theme.wav"),
+            @"pack://application:,,,/Resources/orchesta theme.wav"),
         new Uri(
-            @"C:\\Users\\jhp33\\source\\repos\\School\\N&C\\Noughts and Crosses\\Noughts and Crosses\\Resources\\8bit theme.wav"),
+            @"pack://application:,,,/Resources/8bit theme.wav"),
         new Uri(
-            @"C:\Users\jhp33\source\repos\School\N&C\Noughts and Crosses\Noughts and Crosses\Resources\organ theme.wav")
+            @"pack://application:,,,/Resources/organ theme.wav")
     };
 
     private int back;
@@ -169,7 +172,7 @@ public partial class Page1 : Window
         get => back;
         set
         {
-            if (value is < 3 and > -1)
+            if (value is < 4 and > -1)
             {
                 back = value;
                 Background = backs[value];
@@ -185,11 +188,11 @@ public partial class Page1 : Window
     {
         new SolidColorBrush(Colors.DarkSlateGray),
         new ImageBrush(new BitmapImage(new Uri(
-            @"C:\Users\jhp33\source\repos\School\N&C\Noughts and Crosses\Noughts and Crosses\Resources\Mandelbrot.png"))),
+            @"pack://application:,,,/Resources/Mandelbrot.png"))),
         new ImageBrush(new BitmapImage(new Uri(
-            @"C:\Users\jhp33\source\repos\School\N&C\Noughts and Crosses\Noughts and Crosses\Resources\Snowflake.png"))),
+            @"pack://application:,,,/Resources/Snowflake.png"))),
         new ImageBrush(new BitmapImage(new Uri(
-            @"C:\Users\jhp33\source\repos\School\N&C\Noughts and Crosses\Noughts and Crosses\Resources\Square.png")))
+            @"pack://application:,,,/Resources/Square.png")))
     };
 
     private int mode;

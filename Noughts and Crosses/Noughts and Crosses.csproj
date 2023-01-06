@@ -15,17 +15,40 @@
     <None Remove="Resources\Nought.png" />
     <None Remove="Resources\orchesta theme.wav" />
     <None Remove="Resources\organ theme.wav" />
+    <None Remove="Resources\Snowflake.png" />
+    <None Remove="Resources\Square.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
+    <PackageReference Include="Costura.Fody" Version="5.7.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Resources\8bit theme.wav" />
-    <EmbeddedResource Include="Resources\Mandelbrot.png" />
+    <Resource Include="Resources\Mandelbrot.png" />
     <Resource Include="Resources\orchesta theme.wav" />
     <Resource Include="Resources\organ theme.wav" />
+    <Resource Include="Resources\Snowflake.png" />
+    <Resource Include="Resources\Square.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>
